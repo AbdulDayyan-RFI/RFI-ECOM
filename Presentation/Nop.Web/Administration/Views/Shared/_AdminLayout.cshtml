@@ -80,7 +80,7 @@
 <!DOCTYPE html>
 <html@(supportRtl ? Html.Raw(" dir=\"rtl\"") : null)>
     <head>
-        <title>@adminPageTitle</title>
+        <title>Ecommerce</title>
         <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         @Html.NopHeadCustom()
@@ -113,7 +113,7 @@
             {
                 @Html.Widget("admin_header_before", area: "Admin")
                 <div class="main-header">
-                    <a href="@Url.Content("~/admin")" class="logo">
+                    <a href="@Url.Content("~/admin")">
                         <!-- mini logo for sidebar mini 50x50 pixels -->
                         @*<span class="logo-mini"></span>*@
                         <!-- logo for regular state and mobile devices -->

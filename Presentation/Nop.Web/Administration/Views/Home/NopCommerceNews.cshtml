@@ -32,25 +32,28 @@
         </div>
     </div>
     <div class="box-body">
-        <div class="row">
+        <div>
             @foreach (var item in Model.Items)
             {
-                <div class="col-md-4">
-                    <div class="panel panel-info">
-                        <div class="panel-heading clearfix">
-                            @if (!String.IsNullOrEmpty(item.Url))
+                <div>
+                    <div>
+                        <div class="clearfix">
+                            <a class="pull-left" href='#'>Focus on Italian e-commerce 2017</a>
+                            @*@if (!String.IsNullOrEmpty(item.Url))
                             {
                                 <a class="pull-left" href='@(item.Url)'>@item.Title</a>
                             }
                             else
                             {
                                 <div class="pull-left">@item.Title</div>
-                            }
-                            @*<div class="pull-right">@item.PublishDate.ToString("d")</div>*@
+                            }*@
+                            <div class="pull-left">@item.PublishDate.ToString("d")</div>
                         </div>
                         <div class="panel-body">
-                            @Html.Raw(item.Summary)
+                            @*@Html.Raw(item.Summary)*@
+                            Italy’s e-commerce growth rate in sales reached 18% in 2016, its customer base of e-shoppers has now reached 18 million people, and the average
                         </div>
+                        <hr />
                     </div>
                 </div>
             }
