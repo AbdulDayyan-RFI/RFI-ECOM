@@ -144,12 +144,12 @@
                                 <li>
                                     @Html.Widget("admin_header_middle", area: "Admin")
                                 </li>
-                                <li>
+                                @*<li>
                                     <a href="@Url.Action("Index", "Home", new {area = ""})">
                                         @T("Admin.Header.PublicStore")
                                     </a>
-                                </li>
-                                @if (canManageMaintenance)
+                                </li>*@
+                                @*@if (canManageMaintenance)
                                 {
                                     <li class="dropdown">
                                         <a href="#" data-toggle="dropdown"><i class="fa fa-gears"></i></a>
@@ -183,7 +183,7 @@
                                             </li>
                                         </ul>
                                     </li>
-                                }
+                                }*@
                             </ul>
                             @Html.Widget("admin_header_navbar_after", area: "Admin")
                         </div>

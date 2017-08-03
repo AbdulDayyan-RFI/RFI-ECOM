@@ -5,6 +5,8 @@
 @{
     Html.AppendCssFileParts("~/Administration/Content/ionicons/css/ionicons-2.0.1.min.css");
     Html.AppendScriptParts("~/Administration/Scripts/chartjs/Chart.min.js");
+    Html.AppendScriptParts("~/Administration/Scripts/jquery-1.10.2.min.js");
+    Html.AppendScriptParts("~/Administration/Scripts/bootstrap/bootstarp.min.js");
     const string prefix = "order-statistics";
     //static data for all graphs and change graphs accordingly
     //page title
@@ -16,7 +18,35 @@
     var canManageProducts = permissionService.Authorize(StandardPermissionProvider.ManageProducts);
     var canManageReturnRequests = permissionService.Authorize(StandardPermissionProvider.ManageReturnRequests);
 }
+<style>
+    .data_list {
+        padding: 0;
+        margin: 0 0 10px 0;
+    }
 
+        .data_list li:first-child {
+            border-top-right-radius: 3px;
+            border-top-left-radius: 3px;
+        }
+
+        .data_list li {
+            position: relative;
+            display: block;
+            padding: 10px 15px;
+            margin-bottom: -1px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+    .data_value1 {
+        line-height: 39px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0 10px 0 0;
+        font-size: 1.7em;
+    }
+</style>
 @Html.AntiForgeryToken()
 <div class="content-header">
     <h1>
@@ -59,7 +89,7 @@
                             <div class="panel box box-info">
                                 <div class="box-header with-border clearfix">
                                     <div class="box-title">
-                                      <i class="fa fa-clock-o"></i>  Activity overview
+                                        <i class="fa fa-clock-o"></i>  Activity overview
                                     </div>
                                 </div>
                                 <div class="box-body">
@@ -73,7 +103,7 @@
                                             </small>
                                         </span>
                                     </div>
-                                    <div  class="text-black h3 pull-right">
+                                    <div class="text-black h3 pull-right">
                                         <span>32</span>
 
                                     </div>
@@ -90,22 +120,145 @@
                                     <div class="text-black h3 pull-right">
                                         <span>3</span>
                                     </div>
+
+
+                                </div>
+
+                                <div>
                                     <div class="panel panel-info">
                                         <div class="panel-heading clearfix">
                                             <div class="box-title">
                                                 <i class="fa fa-clock-o"></i>  Currently Pending
                                             </div>
                                         </div>
+                                        <div class="box-body">
+                                            <ul class="data_list">
+                                                <li>
+                                                    <a href="#"> Orders</a>
+                                                    <span class="data_value1"><span>2</span> </span>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Return/Exchanges</a>
+                                                    <span class="data_value1"><span>0</span> </span>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Abandoned Carts</a>
+                                                    <span class="data_value1"><span>49</span> </span>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Out of Stock Products</a>
+                                                    <span class="data_value1"><span>4</span> </span>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
+                                <div>
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading clearfix">
+                                            <div class="box-title">
+                                                <i class="fa fa-exclamation-circle"></i>  Notifications
+                                            </div>
+                                        </div>
+                                        <div class="box-body">
+                                            <ul class="data_list">
+                                                <li>
+                                                    <a href="#"> New Messages</a>
+                                                    <span class="data_value1"><span>256</span> </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading clearfix">
+                                            <div class="box-title">
+                                                <i class="fa fa-user"></i> Customers & Newsletters
+                                                <span class="clearfix">
+                                                    (FROM 2017-07-03 TO 2017-08-03)
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="box-body">
+                                            <ul class="data_list">
+                                                <li>
+                                                    <a href="#"> New Customers</a>
+                                                    <span class="data_value1"><span>64</span> </span>
+                                                </li>
+                                                <li>
+                                                    <a href="#">New Subscriptions</a>
+                                                    <span class="data_value1"><span>160</span> </span>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Total Subscribers</a>
+                                                    <span class="data_value1"><span>721</span> </span>
+                                                </li>
 
-
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading clearfix">
+                                            <div class="box-title">
+                                                <i class="fa fa-globe"></i> Traffic
+                                                <span class="clearfix">
+                                                    (FROM 2017-07-03 TO 2017-08-03)
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="box-body">
+                                            <ul class="data_list">
+                                                <li>
+                                                    <a href="#"> Visits</a>
+                                                    <span class="data_value1"><span>2564</span> </span>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Unique Visitors</a>
+                                                    <span class="data_value1"><span>1260</span> </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                         
+
                         </div>
                         <div class="col-md-8 col-lg-7">
-
                             @Html.Action("OrderStatistics", "Order")
+                            <div class="panel box box-info">
+                                <div class="box-header with-border clearfix">
+                                    <div class="box-title">
+                                        <i class="fa fa-bar-chart"></i> PRODUCTS AND SALES
+                                    </div>
+                                </div>
+                                <div class="box-body">
+                                    <nav>
+                                        <ul class="nav nav-pills">
+                                            <li class="active"><a href="#1a" data-toggle="tab"><i class="fa fa-fire"></i> RECENT ORDERS</a></li>
+                                            <li><a href="#2a" data-toggle="tab"><i class="fa fa-trophy"></i>BEST SELLERS</a></li>
+                                            <li><a href="#3a" data-toggle="tab"><i class="fa fa-search"></i>TOP SEARCHES</a></li>
+                                            <li><a href="#4a" data-toggle="tab"><i class="fa fa-money"></i>ORDER TOTALS</a></li>
+                                        </ul>
+                                    </nav>
+                                    <div class="tab-content panel">
+                                        <div class="tab-pane active" id="1a">
+                                            @Html.Action("LatestOrders", "Order")
+                                        </div>
+                                        <div class="tab-pane" id="2a">
+                                            @Html.Action("PopularSearchTermsReport", "Common")
+                                        </div>
+                                        <div class="tab-pane" id="3a">
+                                            @Html.Action("BestsellersBriefReportByQuantity", "Order")
+                                        </div>
+                                        <div class="tab-pane" id="4a">
+                                            @Html.Action("OrderAverageReport", "Order")
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-12 col-lg-2">
                             @Html.Action("NopCommerceNews", "Home")
@@ -119,7 +272,7 @@
                         }*@
                 </div>
             }
-            @Html.Widget("admin_dashboard_news_after")
+            @*@Html.Widget("admin_dashboard_news_after")
             @if (!Model.IsLoggedInAsVendor && canManageOrders && canManageCustomers && canManageProducts && canManageReturnRequests)
             {
                 <div class="row">
@@ -146,32 +299,32 @@
             @if (!Model.IsLoggedInAsVendor && (canManageOrders || canManageProducts))
             {
                 <div class="row">
-                    @if (canManageOrders)
-                    {
-                        <div class="col-md-8">
-                            @Html.Action("LatestOrders", "Order")
-                        </div>
-                    }
-                    <div class="col-md-4">
-                        @if (canManageProducts)
+                        @if (canManageOrders)
                         {
-                            @Html.Action("PopularSearchTermsReport", "Common")
+                            <div class="col-md-8">
+                                @Html.Action("LatestOrders", "Order")
+                            </div>
                         }
+                        <div class="col-md-4">
+                            @if (canManageProducts)
+                            {
+                                @Html.Action("PopularSearchTermsReport", "Common")
+                            }
+                        </div>
                     </div>
-                </div>
             }
             @Html.Widget("admin_dashboard_latestorders_searchterms_after")
             @if (canManageOrders)
             {
                 <div class="row">
-                    <div class="col-md-6">
-                        @Html.Action("BestsellersBriefReportByQuantity", "Order")
+                        <div class="col-md-6">
+                            @Html.Action("BestsellersBriefReportByQuantity", "Order")
+                        </div>
+                        <div class="col-md-6">
+                            @Html.Action("BestsellersBriefReportByAmount", "Order")
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        @Html.Action("BestsellersBriefReportByAmount", "Order")
-                    </div>
-                </div>
-            }
+            }*@
             @Html.Widget("admin_dashboard_bottom")
         </div>
     </div>
