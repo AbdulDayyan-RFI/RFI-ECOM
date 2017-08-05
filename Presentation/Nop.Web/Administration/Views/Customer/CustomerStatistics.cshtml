@@ -56,25 +56,25 @@
     </div>
     <div class="box-body">
         <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-default active">
-                <input type="radio" name="name" value="" />
-                <i class="fa fa-circle" style="color:#9E5BA1"></i>
-                Traffic
+            <label class="btn btn-default forecast active">
+                <input type="radio" name="forecast" value="Sales" />
+                <i class="fa fa-circle" style="color:#F99031"></i>
+                Sales
             </label>
-            <label class="btn btn-default">
-                <input type="radio" name="name" value="" />
-                <i class="fa fa-circle" style="color:#00A89C"></i>
-                Conversion
-            </label>
-            <label class="btn btn-default">
-                <input type="radio" name="name" value="" />
+            <label class="btn btn-default forecast">
+                <input type="radio" name="forecast" value="Cart Value" />
                 <i class="fa fa-circle" style="color:#3AC4ED"></i>
                 Average Cart Value
             </label>
-            <label class="btn btn-default">
-                <input type="radio" name="name" value="" />
-                <i class="fa fa-circle" style="color:#F99031"></i>
-                Sales
+            <label class="btn btn-default forecast">
+                <input type="radio" name="forecast" value="Visits" />
+                <i class="fa fa-circle" style="color:#9E5BA1"></i>
+                Traffic
+            </label>
+            <label class="btn btn-default forecast">
+                <input type="radio" name="forecast" value="Conversion" />
+                <i class="fa fa-circle" style="color:#00A89C"></i>
+                Conversion
             </label>
         </div>
         <div class="chart" style="height: 300px;">
@@ -177,7 +177,7 @@
             }
         };
 
-        function changeCsPeriod(period) {
+        @*function changeCsPeriod(period) {
             var csLabels = [];
             var csData = [];
 
@@ -209,12 +209,15 @@
                     alert('Failed to load statistics.');
                 }
             });
-        }
+        }*@
 
         $('#@(prefix)-box button[data-chart-role="toggle-chart"]').on('click', function () {
+
+            var type = $.trim($(".dash_heading_selected").find('.dash_heading').text());
             var period = $(this).attr('data-chart-period');
             csCurrentPeriod = period;
-            changeCsPeriod(period);
+            csdashGraph(period);
+
             $('#@(prefix)-box button[data-chart-role="toggle-chart"]').removeClass('bg-light-blue');
             $(this).addClass('bg-light-blue');
         });
@@ -223,7 +226,54 @@
         {
             <text>
         $('#@(prefix)-box button[data-chart-role="toggle-chart"][data-chart-period="week"]').trigger('click');
+        var type = $.trim($(".dash_heading_selected").find('.dash_heading').text());
+        var period = $('.bg-light-blue').attr('data-chart-period');
+        csdashGraph(period, type);
         </text>
+        }
+
+        $(".forecast").on('click', function () {
+            $(".forecast").removeClass('active');
+            $(this).addClass('active');
+
+            var type = $.trim($(this).find("input").val());
+            var period = $('.bg-light-blue').attr('data-chart-period');
+            csdashGraph(period, type);
+        });
+
+        function csdashGraph(period, type) {
+            var csLabels = [];
+            var csData = [];
+
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("DashGraph", "Order")',
+                data: {
+                    period: period,
+                    type: type
+                },
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        csLabels.push(data[i].date);
+                        csData.push(data[i].value);
+                    }
+
+                    if (!window.customerStatistics) {
+                        csConfig.data.labels = csLabels;
+                        csConfig.data.datasets[0].data = csData;
+                        csConfig.data.scales =
+                        window.customerStatistics = new Chart(document.getElementById("@prefix-chart").getContext("2d"), csConfig);
+                    } else {
+                        window.customerStatistics.config.data.labels = csLabels;
+                        window.customerStatistics.config.data.datasets[0].data = csData;
+                        window.customerStatistics.update();
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    //alert('Failed to load statistics.');
+                }
+            });
         }
     });
 </script>

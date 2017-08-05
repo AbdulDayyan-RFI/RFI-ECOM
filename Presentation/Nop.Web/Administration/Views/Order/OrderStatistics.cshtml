@@ -193,7 +193,7 @@
             }
         };
 
-        function changeOsPeriod(period) {
+        @*function changeOsPeriod(period) {
             var osLabels = [];
             var osData = [];
 
@@ -227,12 +227,15 @@
                     alert('Failed to load statistics.');
                 }
             });
-        }
+        }*@
 
         $('#@(prefix)-box button[data-chart-role="toggle-chart"]').on('click', function () {
+           
+            var type = $.trim($(".dash_heading_selected").find('.dash_heading').text());
             var period = $(this).attr('data-chart-period');
             osCurrentPeriod = period;
-            changeOsPeriod(period);
+            osdashGraph(period, type);
+
             $('#@(prefix)-box button[data-chart-role="toggle-chart"]').removeClass('bg-light-blue');
             $(this).addClass('bg-light-blue');
         });
@@ -248,12 +251,12 @@
             $(".label-tooltip").removeClass('dash_heading_selected');
             $(this).addClass('dash_heading_selected');
 
-            var type = $.trim($(this).find('.dash_heading').text());
+            var type = $.trim($(".dash_heading_selected").find('.dash_heading').text());
             var period = $('.bg-light-blue').attr('data-chart-period');
-            dashGraph(period, type, $(this));
+            osdashGraph(period, type);
         });
 
-        function dashGraph(period, type, $this) {
+        function osdashGraph(period, type) {
             var osLabels = [];
             var osData = [];
 
@@ -273,7 +276,7 @@
                         total = total + parseInt(data[i].value);
                     }
                     
-                    $this.find(".data_value").children("span").html(total);
+                    $(".dash_heading_selected").find(".data_value").children("span").html(total);
 
                     if (!window.orderStatistics) {
                         osConfig.data.labels = osLabels;
