@@ -8,30 +8,75 @@
     const string hidePanelAttributeName = "HideCustomerStatisticsPanel";
     var hidePanel = EngineContext.Current.Resolve<IWorkContext>().CurrentCustomer.GetAttribute<bool>(hidePanelAttributeName);
 }
-
+<style>
+    .badge {
+        color: #555;
+        font-size: 1.1em;
+        line-height: 1.2em;
+        padding: 0 10px;
+        font-weight: 700;
+        border: solid 1px #d9d9d9;
+        background-color: #fff;
+        margin-left: .4em;
+        -webkit-border-radius: 20px;
+        border-radius: 20px;
+        vertical-align: baseline;
+        white-space: nowrap;
+        text-align: center;
+    }
+</style>
 <div class="box box-info @if (hidePanel){<text>collapsed-box</text>}" id="@(prefix)-box">
     <div class="box-header with-border">
         <h3 class="box-title">
-            <i class="fa fa-user"></i>
-            @T("Admin.Customers.Reports.CustomerStatistics")
+            <i class="fa fa-bar-chart"></i>
+            FORECAST
+            @*@T("Admin.Customers.Reports.CustomerStatistics")*@
+
         </h3>
+        <span id="badgeYear" class="badge"></span>
+        <span class="btn-group">
+            <a href="javascript:void(0);" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-backward"></i></a>
+            <a href="javascript:void(0);" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-forward"></i></a>
+        </span>
         <div class="box-tools pull-right">
-            <button class="btn btn-xs btn-info btn-flat margin-r-5" @if (hidePanel) { <text> disabled="disabled" </text>  } data-chart-role="toggle-chart" data-chart-period="year">@T("Admin.Customers.Reports.CustomerStatistics.Year")</button>
-            <button class="btn btn-xs btn-info btn-flat margin-r-5" @if (hidePanel) { <text> disabled="disabled" </text>  } data-chart-role="toggle-chart" data-chart-period="month">@T("Admin.Customers.Reports.CustomerStatistics.Month")</button>
-            <button class="btn btn-xs btn-info btn-flat" @if (hidePanel) { <text> disabled="disabled" </text>  } data-chart-role="toggle-chart" data-chart-period="week">@T("Admin.Customers.Reports.CustomerStatistics.Week")</button>
-            <button class="btn btn-box-tool margin-l-10" data-widget="collapse">
-                @if (hidePanel)
-                {
-                    <text><i class="fa fa-plus"></i></text>
-                }
-                else
-                {
-                    <text><i class="fa fa-minus"></i></text>
-                }
-            </button>
+            @*<button class="btn btn-xs btn-info btn-flat margin-r-5" @if (hidePanel) { <text> disabled="disabled" </text>    } data-chart-role="toggle-chart" data-chart-period="year">@T("Admin.Customers.Reports.CustomerStatistics.Year")</button>
+    <button class="btn btn-xs btn-info btn-flat margin-r-5" @if (hidePanel) { <text> disabled="disabled" </text>    } data-chart-role="toggle-chart" data-chart-period="month">@T("Admin.Customers.Reports.CustomerStatistics.Month")</button>
+    <button class="btn btn-xs btn-info btn-flat" @if (hidePanel) { <text> disabled="disabled" </text>    } data-chart-role="toggle-chart" data-chart-period="week">@T("Admin.Customers.Reports.CustomerStatistics.Week")</button>
+    <button class="btn btn-box-tool margin-l-10" data-widget="collapse">
+        @if (hidePanel)
+        {
+            <text><i class="fa fa-plus"></i></text>
+        }
+        else
+        {
+            <text><i class="fa fa-minus"></i></text>
+        }
+    </button>*@
         </div>
     </div>
     <div class="box-body">
+        <div class="btn-group" data-toggle="buttons">
+            <label class="btn btn-default active">
+                <input type="radio" name="name" value="" />
+                <i class="fa fa-circle" style="color:#9E5BA1"></i>
+                Traffic
+            </label>
+            <label class="btn btn-default">
+                <input type="radio" name="name" value="" />
+                <i class="fa fa-circle" style="color:#00A89C"></i>
+                Conversion
+            </label>
+            <label class="btn btn-default">
+                <input type="radio" name="name" value="" />
+                <i class="fa fa-circle" style="color:#3AC4ED"></i>
+                Average Cart Value
+            </label>
+            <label class="btn btn-default">
+                <input type="radio" name="name" value="" />
+                <i class="fa fa-circle" style="color:#F99031"></i>
+                Sales
+            </label>
+        </div>
         <div class="chart" style="height: 300px;">
             <canvas id="@(prefix)-chart" height="300"></canvas>
         </div>
@@ -40,7 +85,18 @@
 
 <script>
     $(document).ready(function () {
-        var csCurrentPeriod;
+        var csCurrentPeriod ="year";
+
+        var year = new Date().getFullYear();
+        $('#badgeYear').html(year);
+        $('.glyphicon-backward').click(function () {
+            var currentYear = $('#badgeYear').html();
+            $('#badgeYear').html(parseInt(currentYear) - 1);
+        });
+        $('.glyphicon-forward').click(function () {
+            var currentYear = $('#badgeYear').html();
+            $('#badgeYear').html(parseInt(currentYear) + 1);
+        });
 
         $('#@(prefix)-box').on('click', 'button[data-widget="collapse"]', function () {
             var collapsed = !$('#@(prefix)-box').hasClass('collapsed-box');
@@ -56,7 +112,7 @@
         });
 
         var csConfig = {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: [],
                 datasets: [
@@ -166,8 +222,8 @@
         @if (!hidePanel)
         {
             <text>
-                $('#@(prefix)-box button[data-chart-role="toggle-chart"][data-chart-period="week"]').trigger('click');
-            </text>
+        $('#@(prefix)-box button[data-chart-role="toggle-chart"][data-chart-period="week"]').trigger('click');
+        </text>
         }
     });
 </script>
