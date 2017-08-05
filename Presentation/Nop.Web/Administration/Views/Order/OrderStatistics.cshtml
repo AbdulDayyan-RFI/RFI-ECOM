@@ -20,11 +20,26 @@
     .size_l {
         font-size: 1.7em;
     }
+
     dl.active {
-    background-color: #00aff0;
-    -webkit-box-shadow: #fff 0 0 0 2px inset;
-    box-shadow: #fff 0 0 0 2px inset;
-}
+        background-color: #00aff0;
+        -webkit-box-shadow: #fff 0 0 0 2px inset;
+        box-shadow: #fff 0 0 0 2px inset;
+    }
+
+    dt.dash_heading {
+        font-weight: 500;
+        font-size: 14px;
+    }
+
+    .dash_heading_selected {
+        color: white !important;
+        background-color: #3c8dbc !important;
+    }
+
+        .dash_heading_selected dd.data_value {
+            color: white !important;
+        }
 </style>
 @{
     Html.AppendScriptParts("~/Administration/Scripts/chartjs/Chart.min.js");
@@ -55,38 +70,38 @@
                         }
                     </button>
                 </div>*@
-            <div>
-                <dl class="col-xs-4 col-lg-2 label-tooltip">
-                    <dt>Sales</dt>
-                    <dd class="data_value size_l"><span>$708,251.00 </span></dd>
-                    <dd><span></span></dd>
-                </dl>
-                <dl class="col-xs-4 col-lg-2 label-tooltip">
-                    <dt>Orders</dt>
-                    <dd class="data_value size_l"><span>$708,251.00 </span></dd>
-                    <dd><span></span></dd>
-                </dl>
-                <dl class="col-xs-4 col-lg-2 label-tooltip">
-                    <dt>Cart Value</dt>
-                    <dd class="data_value size_l"><span>$708,251.00 </span></dd>
-                    <dd><span></span></dd>
-                </dl>
-                <dl class="col-xs-4 col-lg-2 label-tooltip">
-                    <dt>Visits</dt>
-                    <dd class="data_value size_l"><span>$708,251.00 </span></dd>
-                    <dd><span></span></dd>
-                </dl>
-                <dl class="col-xs-4 col-lg-2 label-tooltip">
-                    <dt>Conversion Rate</dt>
-                    <dd class="data_value size_l"><span>$708,251.00 </span></dd>
-                    <dd><span></span></dd>
-                </dl>
-                <dl class="col-xs-4 col-lg-2 label-tooltip">
-                    <dt>Net Profit</dt>
-                    <dd class="data_value size_l"><span>$708,251.00 </span></dd>
-                    <dd><span></span></dd>
-                </dl>
-            </div>
+        <div>
+            <dl class="col-lg-2 label-tooltip dash_heading_selected">
+                <dt class="dash_heading">Orders</dt>
+                <dd class="data_value"><span id="totalorders">0 </span></dd>
+                <dd><span></span></dd>
+            </dl>
+            <dl class="col-lg-2 label-tooltip">
+                <dt class="dash_heading">Sales</dt>
+                <dd class="data_value"><text>$ </text><span>708251 </span></dd>
+                <dd><span></span></dd>
+            </dl>
+            <dl class="col-lg-2 label-tooltip">
+                <dt class="dash_heading">Cart Value</dt>
+                <dd class="data_value"><text>$ </text><span>450 </span></dd>
+                <dd><span></span></dd>
+            </dl>
+            <dl class="col-lg-2 label-tooltip">
+                <dt class="dash_heading">Visits</dt>
+                <dd class="data_value"><span>561515 </span></dd>
+                <dd><span></span></dd>
+            </dl>
+            <dl class="col-lg-2 label-tooltip">
+                <dt class="dash_heading">Conversion</dt>
+                <dd class="data_value"><span>2.12 </span><text>% </text></dd>
+                <dd><span></span></dd>
+            </dl>
+            <dl class="col-lg-2 label-tooltip">
+                <dt class="dash_heading">Net Profit</dt>
+                <dd class="data_value"><text>$ </text><span>3665841 </span></dd>
+                <dd><span></span></dd>
+            </dl>
+        </div>
     </div>
     <div class="box-body">
         <div class="chart" style="height: 300px;">
@@ -113,7 +128,7 @@
         });
 
         var osConfig = {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: [],
                 datasets: [
@@ -136,7 +151,7 @@
             },
             options: {
                 legend: {
-                    display: true
+                    display: false
                 },
                 scales: {
                     xAxes: [{
@@ -167,9 +182,9 @@
                 //scaleShowHorizontalLines: true,
                 //scaleShowVerticalLines: true,
                 //bezierCurve: true,
-                //pointDot: false,
-                //pointDotRadius: 4,
-                //pointDotStrokeWidth: 1,
+                pointDot: true,
+                pointDotRadius: 1,
+                pointDotStrokeWidth: 1,
                 //pointHitDetectionRadius: 20,
                 datasetStroke: true,
                 datasetFill: true,
@@ -190,11 +205,13 @@
                     period: period
                 },
                 success: function (data) {
+                    var totalorders = 0;
                     for (var i = 0; i < data.length; i++) {
                         osLabels.push(data[i].date);
                         osData.push(data[i].value);
+                        totalorders = totalorders + parseInt(data[i].value);
                     }
-
+                    $("#totalorders").html(totalorders);
                     if (!window.orderStatistics) {
                         osConfig.data.labels = osLabels;
                         osConfig.data.datasets[0].data = osData;
@@ -225,6 +242,54 @@
             <text>
         $('#@(prefix)-box button[data-chart-role="toggle-chart"][data-chart-period="year"]').trigger('click');
         </text>
+        }
+
+        $(".label-tooltip").on('click', function () {
+            $(".label-tooltip").removeClass('dash_heading_selected');
+            $(this).addClass('dash_heading_selected');
+
+            var type = $.trim($(this).find('.dash_heading').text());
+            var period = $('.bg-light-blue').attr('data-chart-period');
+            dashGraph(period, type, $(this));
+        });
+
+        function dashGraph(period, type, $this) {
+            var osLabels = [];
+            var osData = [];
+
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("DashGraph", "Order")',
+                data: {
+                    period: period,
+                    type: type
+                },
+                success: function (data) {
+                    var total = 0;
+                    for (var i = 0; i < data.length; i++) {
+                        osLabels.push(data[i].date);
+                        osData.push(data[i].value);
+                        total = total + parseInt(data[i].value);
+                    }
+                    
+                    $this.find(".data_value").children("span").html(total);
+
+                    if (!window.orderStatistics) {
+                        osConfig.data.labels = osLabels;
+                        osConfig.data.datasets[0].data = osData;
+                        osConfig.data.scales =
+                        window.orderStatistics = new Chart(document.getElementById("@prefix-chart").getContext("2d"), osConfig);
+                    } else {
+                        window.orderStatistics.config.data.labels = osLabels;
+                        window.orderStatistics.config.data.datasets[0].data = osData;
+                        window.orderStatistics.update();
+                    }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    //alert('Failed to load statistics.');
+                }
+            });
         }
     });
 </script>
