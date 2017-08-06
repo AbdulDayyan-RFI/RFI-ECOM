@@ -93,6 +93,7 @@ namespace Nop.Services.Orders
             IStoreMappingService storeMappingService,
             IGenericAttributeService genericAttributeService,
             IProductAttributeService productAttributeService,
+            
             IDateTimeHelper dateTimeHelper)
         {
             this._sciRepository = sciRepository;
@@ -120,6 +121,21 @@ namespace Nop.Services.Orders
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Get All Shopping Cart Items
+        /// </summary>
+        /// <param name="updatedDateUtc"></param>
+        /// <returns></returns>
+        public virtual List<ShoppingCartItem> GetAllShoppingCartItems(DateTime? updatedDateUtc = null)
+        {
+            var scList = new List<ShoppingCartItem>();
+            var query = from sc in _sciRepository.Table
+                        select sc;
+            if (updatedDateUtc.HasValue)
+                query = query.Where(sc => updatedDateUtc.Value >= sc.UpdatedOnUtc);
+
+            return scList = query.ToList();
+        }
 
         /// <summary>
         /// Delete shopping cart item

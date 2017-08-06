@@ -117,7 +117,7 @@
                                         </span>
                                     </div>
                                     <div class="text-black h3 pull-right">
-                                        <span>3</span>
+                                        <span>@Model.ActiveShoppingCart</span>
                                     </div>
 
 
@@ -134,19 +134,19 @@
                                             <ul class="data_list">
                                                 <li>
                                                     <a href="#"> Orders</a>
-                                                    <span class="data_value1"><span>2</span> </span>
+                                                    <span class="data_value1"><span>@Model.Orders</span> </span>
                                                 </li>
                                                 <li>
                                                     <a href="#">Return/Exchanges</a>
-                                                    <span class="data_value1"><span>0</span> </span>
+                                                    <span class="data_value1"><span>@Model.ExchangeOrReturn</span> </span>
                                                 </li>
                                                 <li>
                                                     <a href="#">Abandoned Carts</a>
-                                                    <span class="data_value1"><span>49</span> </span>
+                                                    <span class="data_value1"><span>@Model.AbandonedCarts</span> </span>
                                                 </li>
                                                 <li>
                                                     <a href="#">Out of Stock Products</a>
-                                                    <span class="data_value1"><span>4</span> </span>
+                                                    <span class="data_value1"><span>@Model.OutOfStock</span> </span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -163,7 +163,7 @@
                                             <ul class="data_list">
                                                 <li>
                                                     <a href="#"> New Messages</a>
-                                                    <span class="data_value1"><span>256</span> </span>
+                                                    <span class="data_value1"><span>@Model.NewMessages</span> </span>
                                                 </li>
                                             </ul>
                                         </div>
@@ -175,7 +175,7 @@
                                             <div class="box-title">
                                                 <i class="fa fa-user"></i> Customers & Newsletters
                                                 <span class="clearfix">
-                                                    (FROM 2017-07-03 TO 2017-08-03)
+                                                    (FROM @DateTime.Now.AddMonths(-1).Date.ToShortDateString() TO @DateTime.Now.Date.ToShortDateString())
                                                 </span>
                                             </div>
                                         </div>
@@ -183,15 +183,15 @@
                                             <ul class="data_list">
                                                 <li>
                                                     <a href="#"> New Customers</a>
-                                                    <span class="data_value1"><span>64</span> </span>
+                                                    <span class="data_value1"><span>@Model.NewCustomers</span> </span>
                                                 </li>
                                                 <li>
                                                     <a href="#">New Subscriptions</a>
-                                                    <span class="data_value1"><span>160</span> </span>
+                                                    <span class="data_value1"><span>@Model.NewSubscription</span> </span>
                                                 </li>
                                                 <li>
                                                     <a href="#">Total Subscribers</a>
-                                                    <span class="data_value1"><span>721</span> </span>
+                                                    <span class="data_value1"><span>@Model.TotalSubscription</span> </span>
                                                 </li>
 
                                             </ul>
@@ -204,7 +204,7 @@
                                             <div class="box-title">
                                                 <i class="fa fa-globe"></i> Traffic
                                                 <span class="clearfix">
-                                                    (FROM 2017-07-03 TO 2017-08-03)
+                                                    (FROM @DateTime.Now.AddMonths(-1).Date.ToShortDateString() TO @DateTime.Now.Date.ToShortDateString())
                                                 </span>
                                             </div>
                                         </div>
@@ -276,58 +276,58 @@
                 </div>
             }
             @*@Html.Widget("admin_dashboard_news_after")
-            @if (!Model.IsLoggedInAsVendor && canManageOrders && canManageCustomers && canManageProducts && canManageReturnRequests)
-            {
-                <div class="row">
-                    <div class="col-md-12">
-                        @Html.Action("CommonStatistics", "Home")
+                @if (!Model.IsLoggedInAsVendor && canManageOrders && canManageCustomers && canManageProducts && canManageReturnRequests)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.Action("CommonStatistics", "Home")
+                        </div>
                     </div>
-                </div>
-            }
-            @Html.Widget("admin_dashboard_commonstatistics_after")
+                }
+                @Html.Widget("admin_dashboard_commonstatistics_after")
 
-            @Html.Widget("admin_dashboard_customerordercharts_after")
-            @if (!Model.IsLoggedInAsVendor && canManageOrders)
-            {
-                <div class="row">
-                    <div class="col-md-8">
-                        @Html.Action("OrderAverageReport", "Order")
-                    </div>
-                    <div class="col-md-4">
-                        @Html.Action("OrderIncompleteReport", "Order")
-                    </div>
-                </div>
-            }
-            @Html.Widget("admin_dashboard_orderreports_after")
-            @if (!Model.IsLoggedInAsVendor && (canManageOrders || canManageProducts))
-            {
-                <div class="row">
-                        @if (canManageOrders)
-                        {
-                            <div class="col-md-8">
-                                @Html.Action("LatestOrders", "Order")
-                            </div>
-                        }
+                @Html.Widget("admin_dashboard_customerordercharts_after")
+                @if (!Model.IsLoggedInAsVendor && canManageOrders)
+                {
+                    <div class="row">
+                        <div class="col-md-8">
+                            @Html.Action("OrderAverageReport", "Order")
+                        </div>
                         <div class="col-md-4">
-                            @if (canManageProducts)
+                            @Html.Action("OrderIncompleteReport", "Order")
+                        </div>
+                    </div>
+                }
+                @Html.Widget("admin_dashboard_orderreports_after")
+                @if (!Model.IsLoggedInAsVendor && (canManageOrders || canManageProducts))
+                {
+                    <div class="row">
+                            @if (canManageOrders)
                             {
-                                @Html.Action("PopularSearchTermsReport", "Common")
+                                <div class="col-md-8">
+                                    @Html.Action("LatestOrders", "Order")
+                                </div>
                             }
+                            <div class="col-md-4">
+                                @if (canManageProducts)
+                                {
+                                    @Html.Action("PopularSearchTermsReport", "Common")
+                                }
+                            </div>
                         </div>
-                    </div>
-            }
-            @Html.Widget("admin_dashboard_latestorders_searchterms_after")
-            @if (canManageOrders)
-            {
-                <div class="row">
-                        <div class="col-md-6">
-                            @Html.Action("BestsellersBriefReportByQuantity", "Order")
+                }
+                @Html.Widget("admin_dashboard_latestorders_searchterms_after")
+                @if (canManageOrders)
+                {
+                    <div class="row">
+                            <div class="col-md-6">
+                                @Html.Action("BestsellersBriefReportByQuantity", "Order")
+                            </div>
+                            <div class="col-md-6">
+                                @Html.Action("BestsellersBriefReportByAmount", "Order")
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            @Html.Action("BestsellersBriefReportByAmount", "Order")
-                        </div>
-                    </div>
-            }*@
+                }*@
             @Html.Widget("admin_dashboard_bottom")
         </div>
     </div>

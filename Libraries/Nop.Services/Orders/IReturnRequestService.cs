@@ -11,6 +11,12 @@ namespace Nop.Services.Orders
     public partial interface IReturnRequestService
     {
         /// <summary>
+        /// Get All Return Request
+        /// </summary>
+        /// <returns></returns>
+        List<ReturnRequest> GetAllReturnRequest();
+
+        /// <summary>
         /// Deletes a return request
         /// </summary>
         /// <param name="returnRequest">Return request</param>

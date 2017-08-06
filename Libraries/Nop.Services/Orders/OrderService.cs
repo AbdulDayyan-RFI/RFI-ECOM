@@ -61,6 +61,22 @@ namespace Nop.Services.Orders
         #region Methods
 
         #region Orders
+        /// <summary>
+        /// Get All Orders
+        /// </summary>
+        /// <param name="createdToUtc"></param>
+        /// <returns></returns>
+        public List<Order> GetAllOrders(DateTime? createdToUtc = null)
+        {
+            var orderList = new List<Order>();
+            var query = from o in _orderRepository.Table
+                        where !o.Deleted
+                        select o;
+            if (createdToUtc.HasValue)
+                query = query.Where(o => createdToUtc.Value >= o.CreatedOnUtc);
+            orderList = query.ToList();
+            return orderList;
+        }
 
         /// <summary>
         /// Gets an order
@@ -504,5 +520,6 @@ namespace Nop.Services.Orders
         #endregion
 
         #endregion
+         
     }
 }

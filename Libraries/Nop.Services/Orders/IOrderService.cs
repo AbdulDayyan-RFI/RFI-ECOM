@@ -11,7 +11,11 @@ namespace Nop.Services.Orders
     public partial interface IOrderService
     {
         #region Orders
-
+        /// <summary>
+        /// Get All Order
+        /// </summary>
+        /// <returns></returns>
+        List<Order> GetAllOrders(DateTime? createdToUtc = null);
         /// <summary>
         /// Gets an order
         /// </summary>

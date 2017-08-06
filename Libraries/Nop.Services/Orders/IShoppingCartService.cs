@@ -12,6 +12,12 @@ namespace Nop.Services.Orders
     public partial interface IShoppingCartService
     {
         /// <summary>
+        /// Get All Shopping Cart Items
+        /// </summary>
+        /// <param name="updatedDateUtc"></param>
+        /// <returns></returns>
+        List<ShoppingCartItem> GetAllShoppingCartItems(DateTime? updatedDateUtc = null);
+        /// <summary>
         /// Delete shopping cart item
         /// </summary>
         /// <param name="shoppingCartItem">Shopping cart item</param>

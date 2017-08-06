@@ -30,6 +30,7 @@ namespace Nop.Admin.Controllers
         private readonly IOrderService _orderService;
         private readonly ICustomerService _customerService;
         private readonly IReturnRequestService _returnRequestService;
+        private IShoppingCartService _shoppingCartService;
         private readonly IWorkContext _workContext;
         private readonly ICacheManager _cacheManager;
 
@@ -38,13 +39,14 @@ namespace Nop.Admin.Controllers
         #region Ctor
 
         public HomeController(IStoreContext storeContext,
-            AdminAreaSettings adminAreaSettings, 
+            AdminAreaSettings adminAreaSettings,
             ISettingService settingService,
             IPermissionService permissionService,
             IProductService productService,
             IOrderService orderService,
             ICustomerService customerService,
             IReturnRequestService returnRequestService,
+            IShoppingCartService shoppingCartService,
             IWorkContext workContext,
             ICacheManager cacheManager)
         {
@@ -56,6 +58,7 @@ namespace Nop.Admin.Controllers
             this._orderService = orderService;
             this._customerService = customerService;
             this._returnRequestService = returnRequestService;
+            this._shoppingCartService = shoppingCartService;
             this._workContext = workContext;
             this._cacheManager = cacheManager;
         }
@@ -67,6 +70,21 @@ namespace Nop.Admin.Controllers
         public virtual ActionResult Index()
         {
             var model = new DashboardModel();
+            DateTime date = DateTime.Now.AddMinutes(-30);
+            model.ActiveShoppingCart = _shoppingCartService.GetAllShoppingCartItems(date).Count;
+            model.Orders = _orderService.GetAllOrders().Count;
+            model.ExchangeOrReturn = _returnRequestService.SearchReturnRequests(
+                rs: ReturnRequestStatus.Pending,
+                pageIndex: 0,
+                pageSize: 1).TotalCount;
+            model.NewCustomers = _customerService.GetOnlineCustomers(date, null).Count;
+            model.NewSubscription = _customerService.GetAllCustomers(date).Where(x => x.Active == true).Count();
+            model.TotalSubscription = _customerService.GetAllCustomers(
+                customerRoleIds: new[] { _customerService.GetCustomerRoleBySystemName(SystemCustomerRoleNames.Registered).Id },
+                pageIndex: 0,
+                pageSize: 1).TotalCount;
+            model.OutOfStock= _productService.GetLowStockProducts(0, 0, 1).TotalCount +
+                                             _productService.GetLowStockProductCombinations(0, 0, 1).TotalCount;
             model.IsLoggedInAsVendor = _workContext.CurrentVendor != null;
             return View(model);
         }
@@ -77,7 +95,7 @@ namespace Nop.Admin.Controllers
             try
             {
                 string feedUrl = string.Format("http://www.nopCommerce.com/NewsRSS.aspx?Version={0}&Localhost={1}&HideAdvertisements={2}&StoreURL={3}",
-                    NopVersion.CurrentVersion, 
+                    NopVersion.CurrentVersion,
                     Request.Url.IsLoopback,
                     _adminAreaSettings.HideAdvertisementsOnAdminArea,
                     _storeContext.CurrentStore.Url)
@@ -94,7 +112,7 @@ namespace Nop.Admin.Controllers
                         return SyndicationFeed.Load(reader);
                     }
                 });
-                
+
                 var model = new NopCommerceNewsModel()
                 {
                     HideAdvertisements = _adminAreaSettings.HideAdvertisementsOnAdminArea
@@ -160,18 +178,18 @@ namespace Nop.Admin.Controllers
             var model = new CommonStatisticsModel();
 
             model.NumberOfOrders = _orderService.SearchOrders(
-                pageIndex: 0, 
+                pageIndex: 0,
                 pageSize: 1).TotalCount;
 
             model.NumberOfCustomers = _customerService.GetAllCustomers(
-                customerRoleIds: new [] { _customerService.GetCustomerRoleBySystemName(SystemCustomerRoleNames.Registered).Id }, 
-                pageIndex: 0, 
+                customerRoleIds: new[] { _customerService.GetCustomerRoleBySystemName(SystemCustomerRoleNames.Registered).Id },
+                pageIndex: 0,
                 pageSize: 1).TotalCount;
 
             model.NumberOfPendingReturnRequests = _returnRequestService.SearchReturnRequests(
-                rs: ReturnRequestStatus.Pending, 
-                pageIndex: 0, 
-                pageSize:1).TotalCount;
+                rs: ReturnRequestStatus.Pending,
+                pageIndex: 0,
+                pageSize: 1).TotalCount;
 
             model.NumberOfLowStockProducts = _productService.GetLowStockProducts(0, 0, 1).TotalCount +
                                              _productService.GetLowStockProductCombinations(0, 0, 1).TotalCount;

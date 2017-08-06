@@ -45,6 +45,15 @@ namespace Nop.Services.Orders
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Get All Return Request
+        /// </summary>
+        /// <returns></returns>
+        public virtual List<ReturnRequest> GetAllReturnRequest()
+        {
+            return  _returnRequestRepository.Table.ToList();
+            
+        }
 
         /// <summary>
         /// Deletes a return request
