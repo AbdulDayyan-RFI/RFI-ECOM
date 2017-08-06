@@ -78,27 +78,27 @@
             </dl>
             <dl class="col-lg-2 label-tooltip" data-toggle="tooltip" title="Sum of revenue (excl. tax) generated within the date range by orders considered validated.">
                 <dt class="dash_heading">Sales</dt>
-                <dd class="data_value"><text>$ </text><span>708251 </span></dd>
+                <dd class="data_value"><text>$ </text><span>0 </span></dd>
                 <dd><span></span></dd>
             </dl>
             <dl class="col-lg-2 label-tooltip" data-toggle="tooltip" title="Average Cart Value is a metric representing the value of an average order within the date range. It is calculated by dividing Sales by Orders.">
-                <dt class="dash_heading">Cart Value</dt>
-                <dd class="data_value"><text>$ </text><span>450 </span></dd>
+                <dt class="dash_heading">CartValue</dt>
+                <dd class="data_value"><text>$ </text><span>0 </span></dd>
                 <dd><span></span></dd>
             </dl>
             <dl class="col-lg-2 label-tooltip" data-toggle="tooltip" title="Total number of visits within the date range. A visit is the period of time a user is actively engaged with your website.">
                 <dt class="dash_heading">Visits</dt>
-                <dd class="data_value"><span>561515 </span></dd>
+                <dd class="data_value"><span>0 </span></dd>
                 <dd><span></span></dd>
             </dl>
             <dl class="col-lg-2 label-tooltip" data-toggle="tooltip" title="Ecommerce Conversion Rate is the percentage of visits that resulted in an validated order.">
                 <dt class="dash_heading">Conversion</dt>
-                <dd class="data_value"><span>2.12 </span><text>% </text></dd>
+                <dd class="data_value"><span>0 </span><text>% </text></dd>
                 <dd><span></span></dd>
             </dl>
             <dl class="col-lg-2 label-tooltip" data-toggle="tooltip" title="Net profit is a measure of the profitability of a venture after accounting for all Ecommerce costs. You can provide these costs by clicking on the configuration icon right above here.">
-                <dt class="dash_heading">Net Profit</dt>
-                <dd class="data_value"><text>$ </text><span>3665841 </span></dd>
+                <dt class="dash_heading">NetProfit</dt>
+                <dd class="data_value"><text>$ </text><span>0 </span></dd>
                 <dd><span></span></dd>
             </dl>
         </div>
@@ -245,6 +245,7 @@
         {
             <text>
         $('#@(prefix)-box button[data-chart-role="toggle-chart"][data-chart-period="year"]').trigger('click');
+        DefaultDashboard();
         </text>
         }
 
@@ -292,6 +293,21 @@
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     //alert('Failed to load statistics.');
+                }
+            });
+        }
+
+        function DefaultDashboard() {
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: '@Url.Action("DefaultDashboard", "Order")',
+                success: function (data) {
+                    $(".label-tooltip").each(function () {
+                        $(this).find(".data_value span").html(data[$.trim($(this).find(".dash_heading").html())]);
+                    });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
                 }
             });
         }

@@ -4477,7 +4477,7 @@ namespace Nop.Admin.Controllers
                                     createdFromUtc: fromDate,
                                     createdToUtc: toDate).Sum(x => x.OrderTotal).ToString();
                     break;
-                case "Cart Value":
+                case "CartValue":
                     var data = _orderService.SearchOrders(
                                     createdFromUtc: fromDate,
                                     createdToUtc: toDate).ToList();
@@ -4490,7 +4490,7 @@ namespace Nop.Admin.Controllers
                 case "Conversion":
 
                     break;
-                case "Net Profit":
+                case "NetProfit":
 
                     break;
                 default:
@@ -4498,6 +4498,35 @@ namespace Nop.Admin.Controllers
             }
 
             return result;
+        }
+
+        [AcceptVerbs(HttpVerbs.Get)]
+        public ActionResult DefaultDashboard()
+        {
+            var nowDt = _dateTimeHelper.ConvertToUserTime(DateTime.Now);
+            var timeZone = _dateTimeHelper.CurrentTimeZone;
+
+            var yearAgoDt = nowDt.AddYears(-1).AddMonths(1);
+            var searchYearDateUser = new DateTime(yearAgoDt.Year, yearAgoDt.Month, 1);
+
+            var data = _orderService.SearchOrders(createdFromUtc: _dateTimeHelper.ConvertToUtcTime(searchYearDateUser, timeZone),
+                createdToUtc: _dateTimeHelper.ConvertToUtcTime(searchYearDateUser, timeZone).AddMonths(13)).ToList();
+
+            var orders = data.Count;
+            var sales = Convert.ToInt32(data.Sum(x => x.OrderTotal));
+            var cartvalue = Convert.ToInt32(sales / orders);
+
+            var result = new
+            {
+                Orders = orders,
+                Sales = sales,
+                CartValue = cartvalue,
+                Visits = 0,
+                Conversion = 0,
+                NetProfit = 0
+            };
+
+            return Json(result);
         }
     }
 }
