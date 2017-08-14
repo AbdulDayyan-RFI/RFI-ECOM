@@ -113,11 +113,12 @@
             {
                 @Html.Widget("admin_header_before", area: "Admin")
                 <div class="main-header">
-                    <a href="@Url.Content("~/admin")">
+                    <a href="@Url.Content("~/admin")" class="logo">
+                        @*<img src="~/Content/Images/tech-baazar-logo.png" />*@
                         <!-- mini logo for sidebar mini 50x50 pixels -->
-                        @*<span class="logo-mini"></span>*@
+                        <span class="logo-mini"></span>
                         <!-- logo for regular state and mobile devices -->
-                        @*<span class="logo-lg"></span>*@
+                        <span class="logo-lg"></span>
                     </a>
                     <div class="navbar navbar-static-top" role="navigation">
                         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">

@@ -472,6 +472,8 @@
     <Compile Include="Validators\Vendors\VendorInfoValidator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Administration\Content\images\fab-icon.jpg" />
+    <Content Include="Administration\Content\images\tech-baazar-logo.png" />
     <Content Include="App_Data\browscap.xml" />
     <Content Include="App_Data\Install\Fast\create_required_data.sql" />
     <Content Include="App_Data\Install\Fast\create_sample_data.sql" />
@@ -531,6 +533,8 @@
     <Content Include="Content\files\ExportImport\Index.htm" />
     <Content Include="Content\files\Index.htm" />
     <Content Include="Content\Images\default-image.png" />
+    <Content Include="Content\Images\fab-icon.jpg" />
+    <Content Include="Content\Images\tech-baazar-logo.png" />
     <Content Include="Content\install\images\logo.png" />
     <Content Include="Content\jquery-ui-themes\smoothness\images\animated-overlay.gif" />
     <Content Include="Content\jquery-ui-themes\smoothness\images\ui-bg_flat_0_aaaaaa_40x100.png" />
