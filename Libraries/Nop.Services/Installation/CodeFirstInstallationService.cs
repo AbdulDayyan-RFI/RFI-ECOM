@@ -11063,7 +11063,7 @@ namespace Nop.Services.Installation
             var poll1 = new Poll
             {
                 Language = defaultLanguage,
-                Name = "Do you like nopCommerce?",
+                Name = "Do you like techbaazar?",
                 SystemKeyword = "",
                 Published = true,
                 ShowOnHomePage = true,
