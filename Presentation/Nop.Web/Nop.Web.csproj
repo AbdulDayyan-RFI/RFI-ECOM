@@ -519,6 +519,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\Install\SqlServer.Indexes.sql" />
+    <Content Include="App_Data\Settings.txt" />
+    <Content Include="App_Data\DBSettingBackup.txt" />
     <Content Include="Content\BBEditor\ed.js" />
     <Content Include="Content\BBEditor\images\bold.gif" />
     <Content Include="Content\BBEditor\images\code.gif" />
@@ -645,6 +647,7 @@
     <Content Include="Content\samples\product_IfYouWait_1.zip" />
     <Content Include="Content\samples\product_NightVision_1.zip" />
     <Content Include="Content\samples\product_ScienceAndFaith_1.zip" />
+    <None Include="Properties\PublishProfiles\TechBazaarV1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fineuploader\iframe.xss.response-4.2.2.js" />
     <Content Include="Scripts\fineuploader\jquery.fineuploader-4.2.2.js" />
@@ -1234,6 +1237,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Catalog\VendorAll.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
