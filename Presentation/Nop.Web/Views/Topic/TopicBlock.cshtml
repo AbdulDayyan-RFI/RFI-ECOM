@@ -1,5 +1,7 @@
 ﻿@model TopicModel
 @using Nop.Web.Models.Topics;
+
+
 @if (Model.IsPasswordProtected)
 {
     <script type="text/javascript">
@@ -69,15 +71,17 @@
 }
 else
 {
-    <div class="topic-block">
-        @if (!String.IsNullOrEmpty(Model.Title))
-        {
-            <div class="topic-block-title">
-                <h2>@Model.Title</h2>
-            </div>
+    
+
+        @*<div class="topic-block">
+                @if (!String.IsNullOrEmpty(Model.Title))
+                {
+                    <div class="topic-block-title">
+                        <h2>@Model.Title</h2>
+                    </div>
+                }
+                <div class="topic-block-body">
+                    @Html.Raw(Model.Body)
+                </div>
+            </div>*@
         }
-        <div class="topic-block-body">
-            @Html.Raw(Model.Body)
-        </div>
-    </div>
-}

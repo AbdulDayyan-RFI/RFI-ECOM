@@ -193,6 +193,46 @@
                         @Html.ValidationMessageFor(model => model.Link5)
                     </div>
                 </div>
+
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @T("Plugins.Widgets.NivoSlider.Picture6")
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.Picture6Id_OverrideForStore, model => model.Picture6Id, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.Picture6Id)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.NopEditorFor(model => model.Picture6Id)
+                        @Html.ValidationMessageFor(model => model.Picture6Id)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.Text6_OverrideForStore, model => model.Text6, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.Text6)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.NopEditorFor(model => model.Text6)
+                        @Html.ValidationMessageFor(model => model.Text6)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.OverrideStoreCheckboxFor(model => model.Link6_OverrideForStore, model => model.Link6, Model.ActiveStoreScopeConfiguration)
+                        @Html.NopLabelFor(model => model.Link6)
+                    </div>
+                    <div class="col-md-9">
+                        @Html.NopEditorFor(model => model.Link6)
+                        @Html.ValidationMessageFor(model => model.Link6)
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="panel panel-default">

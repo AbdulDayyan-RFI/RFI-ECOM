@@ -23,5 +23,9 @@ namespace Nop.Plugin.Widgets.NivoSlider.Models
         public string Picture5Url { get; set; }
         public string Text5 { get; set; }
         public string Link5 { get; set; }
+
+        public string Picture6Url { get; set; }
+        public string Text6 { get; set; }
+        public string Link6 { get; set; }
     }
 }
