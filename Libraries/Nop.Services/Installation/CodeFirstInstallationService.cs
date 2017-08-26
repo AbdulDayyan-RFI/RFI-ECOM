@@ -230,10 +230,10 @@ namespace Nop.Services.Installation
             {
                 new Store
                 {
-                    Name = "Your store name",
+                    Name = "techbaazar",
                     Url = storeUrl,
                     SslEnabled = false,
-                    Hosts = "yourstore.com,www.yourstore.com",
+                    Hosts = "solvemax.in,www.solvemax.in",
                     DisplayOrder = 1,
                     //should we set some default company info?
                     CompanyName = "Your company name",
