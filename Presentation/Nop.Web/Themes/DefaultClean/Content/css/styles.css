@@ -7550,7 +7550,7 @@ pre {
                 background-color: #248ece;
             }
 
-        .productdetail-addtocart .qty-label, .qty-input, select {
+        .productdetail-addtocart .qty-label, .qty-input {
             display: none;
         }
 
