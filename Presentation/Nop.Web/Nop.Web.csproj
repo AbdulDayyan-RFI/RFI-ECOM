@@ -653,6 +653,9 @@
     <Content Include="Content\samples\product_WomenTShirt.jpg" />
     <Content Include="Content\samples\p_attribute_print_1.jpg" />
     <Content Include="Content\samples\p_attribute_print_2.jpg" />
+    <Content Include="Content\slick\slick-theme.css" />
+    <Content Include="Content\slick\slick.css" />
+    <Content Include="Content\slick\slick.js" />
     <Content Include="Scripts\fineuploader\edit.gif" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.css" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.min.css" />
@@ -1057,6 +1060,8 @@
     <Content Include="Views\Vendor\Info.cshtml" />
     <Content Include="Views\Common\Logo.cshtml" />
     <Content Include="Views\Customer\EmailRevalidation.cshtml" />
+    <Content Include="Views\Product\CustomerAlsoViewed.cshtml" />
+    <Content Include="Views\Product\ProductReviews.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />
@@ -1130,7 +1135,7 @@
     <Content Include="Views\Product\_ProductManufacturers.cshtml" />
     <Content Include="Views\Product\_ProductReviewOverview.cshtml" />
     <Content Include="Views\Product\_ProductBreadcrumb.cshtml" />
-    <Content Include="Views\Product\ProductReviews.cshtml" />
+    <Content Include="Views\Product\ProductReviews_backup.cshtml" />
     <Content Include="Views\Product\_ProductSpecifications.cshtml" />
     <Content Include="Views\Product\_ProductTierPrices.cshtml" />
     <Content Include="Views\Product\_GiftCardInfo.cshtml" />

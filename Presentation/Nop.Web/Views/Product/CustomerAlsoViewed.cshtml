@@ -1,14 +1,14 @@
 ﻿@model IList<ProductOverviewModel>
 
 @using Nop.Web.Models.Catalog;
-@{ 
+@{
     int size = Model.Count;
 }
 @if (size > 0)
 {
     <div class="related-products-grid product-grid">
         <div class="title">
-            <strong>@T("Products.RelatedProducts")</strong>
+            <strong>Customer Also Viewed</strong>
         </div>
         <div class="item-grid @(size > 5 ? "regular slider" : "")">
             @foreach (var item in Model)
@@ -18,3 +18,4 @@
         </div>
     </div>
 }
+

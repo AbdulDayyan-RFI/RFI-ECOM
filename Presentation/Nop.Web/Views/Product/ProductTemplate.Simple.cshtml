@@ -49,6 +49,29 @@
 {
     @Html.Partial("_ProductBreadcrumb", Model.Breadcrumb)
 }
+<link href="~/Content/slick/slick.css" rel="stylesheet" />
+<link href="~/Content/slick/slick-theme.css" rel="stylesheet" />
+<style type="text/css">
+    .slick-slide {
+        margin: 0px 20px;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+        color: black;
+    }
+</style>
+<script src="~/Content/slick/slick.js"></script>
+<script type="text/javascript">
+    $(document).on('ready', function() {
+      $(".regular").slick({
+        dots: false,
+        infinite: false,
+        slidesToShow: 4,
+        slidesToScroll: 4
+      });
+    });
+</script>
 @Html.Widget("productdetails_after_breadcrumb", Model.Id)
 <div class="page product-details-page">
     <div class="page-body">
@@ -56,7 +79,7 @@
         @using (Html.BeginRouteForm("Product", new { SeName = Model.SeName }, FormMethod.Post, new { id = "product-details-form" }))
         {
             <div itemscope itemtype="http://schema.org/Product" data-productid="@Model.Id">
-                <div class="product-essential">
+                <div class="product-essential productdetailessential1">
                     @Html.Widget("productdetails_before_pictures", Model.Id)
                     <!--product pictures-->
                     @Html.Partial("_ProductDetailsPictures", Model)
@@ -66,6 +89,13 @@
                         <div class="product-name">
                             <h1 itemprop="name">
                                 @Model.Name
+                                @{
+                                    var dataDictPrice = new ViewDataDictionary();
+                                    dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
+                                    @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
+
+                                    @Html.Partial("_ProductTierPrices", Model.TierPrices)
+                                }
                             </h1>
                         </div>
                         @if (!String.IsNullOrEmpty(Model.ShortDescription))
@@ -79,8 +109,6 @@
                         @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
                         <!--manufacturers-->
                         @Html.Partial("_ProductManufacturers", Model.ProductManufacturers)
-                        <!--availability-->
-                        @Html.Partial("_Availability", Model)
                         <!--SKU, MAN, GTIN, vendor-->
                         @Html.Partial("_SKU_Man_GTIN_Ven", Model)
                         <!--delivery-->
@@ -105,18 +133,7 @@
                             dataDictRental.TemplateInfo.HtmlFieldPrefix = string.Format("rental_{0}", Model.Id);
                             @Html.Partial("_RentalInfo", Model, dataDictRental)
                         }
-                        <!--price & add to cart-->
-                        @{
-                            var dataDictPrice = new ViewDataDictionary();
-                            dataDictPrice.TemplateInfo.HtmlFieldPrefix = string.Format("price_{0}", Model.Id);
-                            @Html.Partial("_ProductPrice", Model.ProductPrice, dataDictPrice)
 
-                            @Html.Partial("_ProductTierPrices", Model.TierPrices)
-
-                            var dataDictAddToCart = new ViewDataDictionary();
-                            dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
-                            @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)
-                        }
                         <!--wishlist, compare, email a friend-->
                         <div class="overview-buttons">
                             @Html.Widget("productdetails_inside_overview_buttons_before", Model.Id)
@@ -132,22 +149,58 @@
                         @Html.Partial("_ShareButton", Model)
                         @Html.Widget("productdetails_overview_bottom", Model.Id)
                     </div>
-                    @if (!String.IsNullOrEmpty(Model.FullDescription))
-                    {
-                        <div class="full-description" itemprop="description">
-                            @Html.Raw(Model.FullDescription)
+                    <div class="productdetail-addtocart">
+                        <!--add to cart-->
+                        <div class="product-name">
+                            @{
+                                var dataDictAddToCart = new ViewDataDictionary();
+                                dataDictAddToCart.TemplateInfo.HtmlFieldPrefix = string.Format("addtocart_{0}", Model.Id);
+                                @Html.Partial("_AddToCart", Model.AddToCart, dataDictAddToCart)
+                            }
                         </div>
-                    }
+                        <!--availability-->
+                        @Html.Partial("_Availability", Model)
+                        <!--Vendor-->
+                        @if (Model.ShowVendor)
+                        {
+                            <div class="product-vendor">
+                                <span class="label">@T("Products.Vendor"):</span>
+                                <span class="value"><a href="@Url.RouteUrl("Vendor", new { SeName = Model.VendorModel.SeName })">@Model.VendorModel.Name</a></span>
+                            </div>
+                        }
+                    </div>
+
                 </div>
-                @Html.Widget("productdetails_before_collateral", Model.Id)
-                <div class="product-collateral">
-                    @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
-                    @Html.Partial("_ProductTags", Model.ProductTags)
+
+                @Html.Action("CustomerAlsoViewed", "Product", new { productId = Model.Id })
+
+                <div class="product-essential productdetailessential1">
+                    @Html.Widget("productdetails_before_collateral", Model.Id)
+                    <div class="product-collateral">
+                        @Html.Partial("_ProductSpecifications", Model.ProductSpecifications)
+
+                        @if (!String.IsNullOrEmpty(Model.FullDescription))
+                        {
+                            <div class="title">
+                                <strong>DESCRIPTION</strong>
+                            </div>
+                            <div class="full-description" itemprop="description">
+                                @Html.Raw(Model.FullDescription)
+                            </div>
+                        }
+
+                        @Html.Partial("_ProductTags", Model.ProductTags)
+                    </div>
                 </div>
+
+                @Html.Action("ProductReviews", "Product", new { productId = Model.Id })
+
                 @Html.Action("ProductsAlsoPurchased", "Product", new { productId = Model.Id })
+
+
                 @Html.Action("RelatedProducts", "Product", new { productId = Model.Id })
             </div>
-        }
+                                }
         @Html.Widget("productdetails_bottom", Model.Id)
     </div>
 </div>
