@@ -1,0 +1,8 @@
+﻿DataProvider: sqlserver
+DataConnectionString: Data Source=DESKTOP;Initial Catalog=nopcomm;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=sa123
+
+
+DataProvider: sqlserver
+DataConnectionString: Data Source=70.32.28.3;Initial Catalog=doodacco_db;Integrated Security=False;Persist Security Info=False;User ID=doodacco_sa;Password=!@qwasZX
+
+
