@@ -17,7 +17,7 @@ namespace Nop.Admin.Models.Catalog
         public string SearchCategoryName { get; set; }
 
         [NopResourceDisplayName("Admin.Catalog.Categories.List.SearchStore")]
-        public int SearchStoreId { get; set; }
+        public int SearchStoreId { get; set; }                                              
         public IList<SelectListItem> AvailableStores { get; set; }
     }
 }

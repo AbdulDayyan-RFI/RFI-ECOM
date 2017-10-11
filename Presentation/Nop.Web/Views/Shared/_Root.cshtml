@@ -5,22 +5,30 @@
 @Html.Partial("_Notifications")
 @Html.Action("JavaScriptDisabledWarning", "Common")
 @Html.Partial("OldInternetExplorerWarning")
-
+@{
+    var url = Request.RawUrl;
+}
 <div class="master-wrapper-page">
-    @Html.Action("AdminHeaderLinks", "Common")
+    @if (url != null && url != "/login?ReturnUrl=%2fadmin")
+    {
+        @Html.Action("AdminHeaderLinks", "Common")
+    }
     @Html.Partial("Header")
     <script type="text/javascript">
         AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
     </script>
-    <div class="header-menu">
-        @Html.Action("TopMenu", "Catalog")
-    </div>
+    @if (url != null && url != "/login?ReturnUrl=%2fadmin")
+    {
+        <div class="header-menu">
+            @Html.Action("TopMenu", "Catalog")
+        </div>
+    }
     <div class="master-wrapper-content">
         @Html.Widget("content_before")
 
         @if (IsSectionDefined("Breadcrumb"))
         {
-            @RenderSection("Breadcrumb") 
+            @RenderSection("Breadcrumb")
         }
         <div class="master-column-wrapper">
             @RenderBody()
