@@ -2,10 +2,14 @@
 @using Nop.Web.Models.Catalog;
 @{
     Layout = null;
+
+    //title
+    Html.AddTitleParts(Model.ProductName);
+    Html.AddTitleParts(T("PageTitle.ProductReviews").Text);
     //page class
     Html.AppendPageCssClassParts("html-product-reviews-page");
 }
-<div class="page product-reviews-page">
+<div class="page product-reviews-page" id="reviewDiv">
     <div class="page-body">
         @if (Model.Items.Count > 0)
         {
