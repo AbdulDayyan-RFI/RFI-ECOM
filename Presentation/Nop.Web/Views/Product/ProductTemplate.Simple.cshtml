@@ -43,6 +43,16 @@
         Html.AddHeadCustomParts("<meta property=\"twitter:image\" content=\"" + Model.DefaultPictureModel.ImageUrl + "\" />");
         Html.AddHeadCustomParts("<meta property=\"twitter:url\" content=\"" + Request.Url.AbsoluteUri + "\" />");
     }
+    string url = "";
+    if (Model.Breadcrumb.CategoryBreadcrumb.Count > 1)
+    {
+        url = Url.RouteUrl("Category", new { SeName = Model.Breadcrumb.CategoryBreadcrumb[1].SeName });
+    }
+    else
+    {
+        url = Url.RouteUrl("Category", new { SeName = Model.Breadcrumb.CategoryBreadcrumb[1].SeName });
+
+    }
 }
 <!--product breadcrumb-->
 @section Breadcrumb
@@ -63,13 +73,32 @@
 </style>
 <script src="~/Content/slick/slick.js"></script>
 <script type="text/javascript">
-    $(document).on('ready', function() {
-      $(".regular").slick({
-        dots: false,
-        infinite: false,
-        slidesToShow: 4,
-        slidesToScroll: 4
-      });
+    $(document).on('ready', function () {
+        $('#reviewDiv').closest('form').find("input[type=text], textarea").val("");
+
+  if (window.history && window.history.pushState) {
+
+    $(window).on('popstate', function() {
+      var hashLocation = location.hash;
+      var hashSplit = hashLocation.split("#!/");
+      var hashName = hashSplit[1];
+
+      if (hashName !== '') {
+        var hash = window.location.hash;
+        if (hash === '') {
+            window.location.href = '@url';
+        }
+      }
+    });
+
+    window.history.pushState('forward', null, './#forward');
+  }
+        $(".regular").slick({
+            dots: false,
+            infinite: false,
+            slidesToShow: 4,
+            slidesToScroll: 4
+        });
     });
 </script>
 @Html.Widget("productdetails_after_breadcrumb", Model.Id)
