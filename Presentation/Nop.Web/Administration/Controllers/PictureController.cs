@@ -19,7 +19,7 @@ namespace Nop.Admin.Controllers
 
         [HttpPost]
         //do not validate request token (XSRF)
-        [AdminAntiForgery(true)] 
+        [AdminAntiForgery(true)]
         public virtual ActionResult AsyncUpload()
         {
             //if (!_permissionService.Authorize(StandardPermissionProvider.UploadPictures))
@@ -30,6 +30,7 @@ namespace Nop.Admin.Controllers
             Stream stream = null;
             var fileName = "";
             var contentType = "";
+            string name = "";
             if (String.IsNullOrEmpty(Request["qqfile"]))
             {
                 // IE
@@ -39,6 +40,9 @@ namespace Nop.Admin.Controllers
                 stream = httpPostedFile.InputStream;
                 fileName = Path.GetFileName(httpPostedFile.FileName);
                 contentType = httpPostedFile.ContentType;
+                name = new Random().Next() + "_" + fileName;
+                var path = Path.Combine(Server.MapPath("~/Content/Images/uploaded"), name);
+                httpPostedFile.SaveAs(path);
             }
             else
             {
@@ -89,8 +93,13 @@ namespace Nop.Admin.Controllers
             var picture = _pictureService.InsertPicture(fileBinary, contentType, null);
             //when returning JSON the mime-type must be set to text/plain
             //otherwise some browsers will pop-up a "Save As" dialog.
-            return Json(new { success = true, pictureId = picture.Id,
-                imageUrl = _pictureService.GetPictureUrl(picture, 100) },
+            return Json(new
+            {
+                success = true,
+                pictureId = picture.Id,
+                imageUrl = _pictureService.GetPictureUrl(picture, 100),
+                fileCreatedName = name
+            },
                 MimeTypes.TextPlain);
         }
     }

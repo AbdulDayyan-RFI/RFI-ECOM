@@ -75,6 +75,7 @@
                 <a class="qq-upload-retry-selector qq-upload-retry" href="#">@T("Common.FileUploader.Retry")</a>
                 <a class="qq-upload-delete-selector qq-upload-delete" href="#">@T("Common.FileUploader.Delete")</a>
                 <span class="qq-upload-status-text-selector qq-upload-status-text"></span>
+                <input type="hidden" name="fileName" id="fileName" value="" />
             </li>
         </ul>
     </div>
@@ -92,6 +93,7 @@
                 $("#@(clientId + "image")").html("<img src='" + responseJSON.imageUrl + "'/>");
                 $("#@(clientId + "value") input").val(responseJSON.pictureId);
                 $("#@(clientId + "remove")").show();
+                $('#fileName').val(responseJSON.fileCreatedName);
             }
         });
         $("#@(clientId + "remove")").click(function(e) {

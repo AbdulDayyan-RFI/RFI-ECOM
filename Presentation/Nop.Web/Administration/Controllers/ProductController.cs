@@ -550,7 +550,7 @@ namespace Nop.Admin.Controllers
             }
             return result.ToArray();
         }
-        
+
         [NonAction]
         protected virtual void PrepareProductModel(ProductModel model, Product product, bool setPredefinedValues, bool excludeProperties)
         {
@@ -573,7 +573,7 @@ namespace Nop.Admin.Controllers
             model.PrimaryStoreCurrencyCode = _currencyService.GetCurrencyById(_currencySettings.PrimaryStoreCurrencyId).CurrencyCode;
             model.BaseWeightIn = _measureService.GetMeasureWeightById(_measureSettings.BaseWeightId).Name;
             model.BaseDimensionIn = _measureService.GetMeasureDimensionById(_measureSettings.BaseDimensionId).Name;
-            
+
             //little performance hack here
             //there's no need to load attributes when creating a new product
             //anyway they're not used (you need to save a product before you map them)
@@ -2133,7 +2133,7 @@ namespace Nop.Admin.Controllers
         [ValidateInput(false)]
         public virtual ActionResult ProductPictureAdd(int pictureId, int displayOrder,
             string overrideAltAttribute, string overrideTitleAttribute,
-            int productId)
+            int productId, string file = "")
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
@@ -2161,12 +2161,13 @@ namespace Nop.Admin.Controllers
                 overrideTitleAttribute);
 
             _pictureService.SetSeoFilename(pictureId, _pictureService.GetPictureSeName(product.Name));
-
+            _productService.InsertImages(productId, file);
             _productService.InsertProductPicture(new ProductPicture
             {
                 PictureId = pictureId,
                 ProductId = productId,
                 DisplayOrder = displayOrder,
+                
             });
 
             return Json(new { Result = true }, JsonRequestBehavior.AllowGet);
@@ -2836,7 +2837,7 @@ namespace Nop.Admin.Controllers
         {
             if (!_permissionService.Authorize(StandardPermissionProvider.ManageProducts))
                 return AccessDeniedView();
-            
+
             if (_workContext.CurrentVendor != null && !_vendorSettings.AllowVendorsToImportProducts)
                 //a vendor can not import products
                 return AccessDeniedView();
@@ -4369,7 +4370,7 @@ namespace Nop.Admin.Controllers
 
                     return Json(new { Result = _localizationService.GetResource("Admin.Catalog.Products.ProductAttributes.Attributes.Values.Fields.AssociatedProduct.HasAttributes") }, JsonRequestBehavior.AllowGet);
                 }
-                
+
                 //gift card
                 if (associatedProduct.IsGiftCard)
                 {
@@ -4780,7 +4781,7 @@ namespace Nop.Admin.Controllers
             //vendors cannot manage these settings
             if (_workContext.CurrentVendor != null)
                 return RedirectToAction("List");
-            
+
             var productEditorSettings = _settingService.LoadSetting<ProductEditorSettings>();
             productEditorSettings = model.ProductEditorSettingsModel.ToEntity(productEditorSettings);
             _settingService.SaveSetting(productEditorSettings);

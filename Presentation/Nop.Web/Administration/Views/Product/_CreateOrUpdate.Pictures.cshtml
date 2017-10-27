@@ -140,7 +140,8 @@
                                 displayOrder: displayOrder,
                                 overrideAltAttribute: overrideAltAttribute,
                                 overrideTitleAttribute: overrideTitleAttribute,
-                                productId: @Model.Id
+                                productId: @Model.Id,
+                                file: $('#fileName').val()
                                 };
                             addAntiForgeryToken(postData);
 
