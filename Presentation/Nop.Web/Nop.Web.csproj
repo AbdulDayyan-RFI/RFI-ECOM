@@ -28,6 +28,7 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>f94c814a</NuGetPackageImportStamp>
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -472,7 +473,10 @@
     <Compile Include="Validators\Vendors\VendorInfoValidator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Administration\Content\images\CloudBazaar_Logo_Final-1.png" />
     <Content Include="Administration\Content\images\fab-icon.jpg" />
+    <Content Include="Administration\Content\images\logo.png" />
+    <Content Include="Administration\Content\images\mini-logo.PNG" />
     <Content Include="Administration\Content\images\tech-baazar-logo.png" />
     <Content Include="App_Data\browscap.xml" />
     <Content Include="App_Data\Install\Fast\create_required_data.sql" />
@@ -534,8 +538,10 @@
     <Content Include="Content\BBEditor\images\unordered.gif" />
     <Content Include="Content\files\ExportImport\Index.htm" />
     <Content Include="Content\files\Index.htm" />
+    <Content Include="Content\Images\CloudBazaar_Logo_Final-1.png" />
     <Content Include="Content\Images\default-image.png" />
     <Content Include="Content\Images\fab-icon.jpg" />
+    <Content Include="Content\Images\Logo.PNG" />
     <Content Include="Content\Images\TabsImages\1.jpg" />
     <Content Include="Content\Images\TabsImages\10.jpg" />
     <Content Include="Content\Images\TabsImages\11.jpg" />
