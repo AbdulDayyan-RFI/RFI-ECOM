@@ -757,14 +757,14 @@ td.k-state-focused.k-state-selected {
     }
 
     .main-header .logo-lg {
-        background: url(images/Logo.png) no-repeat 0% 50%;
+        background: url(images/Logo.PNG) no-repeat 0% 50%;
         background-size: 230px;
         background-color: #fff !important;
-        height: 50px;
+        height: 125px;
     }
 
     .main-header .logo-mini {
-        background: url(images/mini-logo.PNG) no-repeat 50% 50%;
+        background: url(images/Logo.PNG) no-repeat 50% 50%;
         height: 50px;
         background-size: 50px 50px;
     }

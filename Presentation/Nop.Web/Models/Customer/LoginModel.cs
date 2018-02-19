@@ -25,6 +25,7 @@ namespace Nop.Web.Models.Customer
         [NoTrim]
         [NopResourceDisplayName("Account.Login.Fields.Password")]
         [AllowHtml]
+
         public string Password { get; set; }
 
         [NopResourceDisplayName("Account.Login.Fields.RememberMe")]

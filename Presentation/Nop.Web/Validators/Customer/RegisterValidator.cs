@@ -38,8 +38,12 @@ namespace Nop.Web.Validators.Customer
 
             RuleFor(x => x.Password).NotEmpty().WithMessage(localizationService.GetResource("Account.Fields.Password.Required"));
             RuleFor(x => x.Password).Length(customerSettings.PasswordMinLength, 999).WithMessage(string.Format(localizationService.GetResource("Account.Fields.Password.LengthValidation"), customerSettings.PasswordMinLength));
+            RuleFor(x => x.Password).Matches(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$").WithMessage("Password should contain alphanumeric and one capital character.");//.Matches(@"(?=.*?[A-Z])").WithMessage("Password should contain atleast one capital character.");
+            //RuleFor(x => x.Password).Matches(@"(?=.*?[A-Z])").WithMessage("Password should contain atleast one capital character.");
             RuleFor(x => x.ConfirmPassword).NotEmpty().WithMessage(localizationService.GetResource("Account.Fields.ConfirmPassword.Required"));
             RuleFor(x => x.ConfirmPassword).Equal(x => x.Password).WithMessage(localizationService.GetResource("Account.Fields.Password.EnteredPasswordsDoNotMatch"));
+            RuleFor(x => x.ConfirmPassword).Matches(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,}$").WithMessage("Password should contain alphanumeric and one capital character.");//.Matches(@"(?=.*?[A-Z])").WithMessage("Password should contain atleast one capital character."); ;
+            //RuleFor(x => x.ConfirmPassword).Matches(@"(?=.*?[A-Z])").WithMessage("Password should contain atleast one capital character.");
 
             //form fields
             if (customerSettings.CountryEnabled && customerSettings.CountryRequired)
