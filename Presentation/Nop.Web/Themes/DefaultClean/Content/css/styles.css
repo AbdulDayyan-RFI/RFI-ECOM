@@ -512,6 +512,7 @@ label, label + * {
 .cart td.quantity input {
     width: 50px;
     text-align: center;
+    display: block;
 }
 
 .cart td.subtotal,

@@ -29,6 +29,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1538,7 +1539,6 @@
     <Content Include="Views\Language\Edit.cshtml" />
     <Content Include="Views\Language\List.cshtml" />
     <Content Include="Views\Language\_CreateOrUpdate.cshtml" />
-    <Content Include="Views\Log\List.cshtml" />
     <Content Include="Views\Shared\Delete.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Picture.cshtml" />
     <Content Include="Views\Shared\Menu.cshtml" />
@@ -2168,9 +2168,6 @@
     <Content Include="Views\Security\Permissions.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Log\View.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Manufacturer\_CreateOrUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2523,6 +2520,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\admin.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

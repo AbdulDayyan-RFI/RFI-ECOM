@@ -676,6 +676,7 @@
     <Content Include="Content\samples\product_IfYouWait_1.zip" />
     <Content Include="Content\samples\product_NightVision_1.zip" />
     <Content Include="Content\samples\product_ScienceAndFaith_1.zip" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\TechBazaarV1.pubxml" />
     <None Include="Properties\PublishProfiles\nop.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

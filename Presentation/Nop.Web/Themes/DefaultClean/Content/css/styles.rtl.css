@@ -447,6 +447,7 @@ label, label + * {
 .cart td.quantity input {
     width: 50px;
     text-align: center;
+
 }
 .cart td.subtotal,
 .data-table td.total {
