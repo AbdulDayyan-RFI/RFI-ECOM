@@ -556,9 +556,9 @@ namespace Nop.Plugin.Payments.PayPalStandard
             //settings
             var settings = new PayPalStandardPaymentSettings
             {
-                UseSandbox = true,
-                BusinessEmail = "test@test.com",
-                PdtToken= "Your PDT token here...",
+                UseSandbox = false,
+                BusinessEmail = "ahmed@alliance.ae",
+                PdtToken= "coTVziE5Ruvj5AX_p_avcbTp0lzV_R-TLDC_CMO-w8iwdBihM5fUlCXMpNq",
                 PdtValidateOrderTotal = true,
                 EnableIpn = true,
                 AddressOverride = true,

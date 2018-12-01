@@ -133,6 +133,8 @@
                                 @Html.Raw(Model.ShortDescription)
                             </div>
                         }
+
+                       
                         @Html.Widget("productdetails_overview_top", Model.Id)
                         <!--product reviews-->
                         @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
@@ -220,8 +222,12 @@
 
                         @Html.Partial("_ProductTags", Model.ProductTags)
                     </div>
-                </div>
+                   
 
+                </div>
+                <div class="product-essential productdetailessential1">
+                    Product Comparision
+                </div>
                 @Html.Action("ProductReviews", "Product", new { productId = Model.Id })
 
                 @Html.Action("ProductsAlsoPurchased", "Product", new { productId = Model.Id })
