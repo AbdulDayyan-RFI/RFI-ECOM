@@ -50,7 +50,7 @@
     }
     else
     {
-        url = Url.RouteUrl("Category", new { SeName = Model.Breadcrumb.CategoryBreadcrumb[1].SeName });
+        url = Url.RouteUrl("Category", new { SeName = Model.Breadcrumb != null && Model.Breadcrumb.CategoryBreadcrumb.Count > 0 ? Model.Breadcrumb.CategoryBreadcrumb[1].SeName : "" });
 
     }
 }
@@ -134,7 +134,7 @@
                             </div>
                         }
 
-                       
+
                         @Html.Widget("productdetails_overview_top", Model.Id)
                         <!--product reviews-->
                         @Html.Partial("_ProductReviewOverview", Model.ProductReviewOverview)
@@ -222,7 +222,7 @@
 
                         @Html.Partial("_ProductTags", Model.ProductTags)
                     </div>
-                   
+
 
                 </div>
                 <div class="product-essential productdetailessential1">

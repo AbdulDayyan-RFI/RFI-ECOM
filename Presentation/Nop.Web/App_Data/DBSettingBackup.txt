@@ -1,5 +1,5 @@
 ﻿DataProvider: sqlserver
-DataConnectionString: Data Source=DESKTOP-F1I2KQ8;Initial Catalog=nopcomm;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=sa123
+DataConnectionString: Data Source=DESKTOP-673SM2S;Initial Catalog=nopcomm;Integrated Security=False;Persist Security Info=False;User ID=sa;Password=sa123
 
 
 DataProvider: sqlserver

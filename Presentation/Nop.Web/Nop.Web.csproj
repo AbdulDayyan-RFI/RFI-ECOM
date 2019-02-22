@@ -541,7 +541,7 @@
     <Content Include="Content\Images\CloudBazaar_Logo_Final-1.png" />
     <Content Include="Content\Images\default-image.png" />
     <Content Include="Content\Images\fab-icon.jpg" />
-    <Content Include="Content\Images\Logo.PNG" />
+    <Content Include="Content\Images\Logo.jpg" />
     <Content Include="Content\Images\TabsImages\1.jpg" />
     <Content Include="Content\Images\TabsImages\10.jpg" />
     <Content Include="Content\Images\TabsImages\11.jpg" />
@@ -662,6 +662,34 @@
     <Content Include="Content\slick\slick-theme.css" />
     <Content Include="Content\slick\slick.css" />
     <Content Include="Content\slick\slick.js" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\nivo-slider.css" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\sample-images\banner1.jpg" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\sample-images\banner2.jpg" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\bar\arrows.png" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\bar\bar.css" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\bar\bullets.png" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\bar\loading.gif" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\custom\arrows.png" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\custom\bullets.png" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\custom\custom.css" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\custom\loading.gif" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\dark\arrows.png" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\dark\bullets.png" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\dark\dark.css" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\dark\loading.gif" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\default\arrows.png" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\default\bullets.png" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\default\default.css" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\default\loading.gif" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\light\arrows.png" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\light\bullets.png" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\light\light.css" />
+    <Content Include="Plugins\Widgets.NivoSlider\Content\nivoslider\themes\light\loading.gif" />
+    <Content Include="Plugins\Widgets.NivoSlider\Description.txt" />
+    <Content Include="Plugins\Widgets.NivoSlider\logo.jpg" />
+    <Content Include="Plugins\Widgets.NivoSlider\Nop.Plugin.Widgets.NivoSlider.dll" />
+    <Content Include="Plugins\Widgets.NivoSlider\Nop.Plugin.Widgets.NivoSlider.pdb" />
+    <Content Include="Plugins\Widgets.NivoSlider\Scripts\jquery.nivo.slider.js" />
     <Content Include="Scripts\fineuploader\edit.gif" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.css" />
     <Content Include="Scripts\fineuploader\fineuploader-4.2.2.min.css" />
@@ -676,6 +704,10 @@
     <Content Include="Content\samples\product_IfYouWait_1.zip" />
     <Content Include="Content\samples\product_NightVision_1.zip" />
     <Content Include="Content\samples\product_ScienceAndFaith_1.zip" />
+    <Content Include="Plugins\Widgets.NivoSlider\Nop.Plugin.Widgets.NivoSlider.dll.config" />
+    <Content Include="Plugins\Widgets.NivoSlider\Views\Configure.cshtml" />
+    <Content Include="Plugins\Widgets.NivoSlider\Views\PublicInfo.cshtml" />
+    <Content Include="Plugins\Widgets.NivoSlider\web.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\TechBazaarV1.pubxml" />
     <None Include="Properties\PublishProfiles\nop.pubxml" />
@@ -1069,6 +1101,8 @@
     <Content Include="Views\Customer\EmailRevalidation.cshtml" />
     <Content Include="Views\Product\CustomerAlsoViewed.cshtml" />
     <Content Include="Views\Product\ProductReviews.cshtml" />
+    <Content Include="Themes\DefaultClean\Content\css\font-awesome.min.css" />
+    <Content Include="Views\Shared\_NewProductBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Plugins\bin\" />

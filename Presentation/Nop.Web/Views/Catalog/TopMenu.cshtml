@@ -1,100 +1,214 @@
 ﻿@model TopMenuModel
 @using Nop.Web.Models.Catalog;
+@{
+    var url = Request.RawUrl;
+}
+<style>
+    .navbar {
+        background: rgba(252,252,252,1);
+        background: -moz-linear-gradient(left, rgba(252,252,252,1) 0%, rgba(252,252,252,1) 0%, rgba(224,245,250,1) 100%);
+        background: -webkit-gradient(left top, right top, color-stop(0%, rgba(252,252,252,1)), color-stop(0%, rgba(252,252,252,1)), color-stop(100%, rgba(224,245,250,1)));
+        background: -webkit-linear-gradient(left, rgba(252,252,252,1) 0%, rgba(252,252,252,1) 0%, rgba(224,245,250,1) 100%);
+        background: -o-linear-gradient(left, rgba(252,252,252,1) 0%, rgba(252,252,252,1) 0%, rgba(224,245,250,1) 100%);
+        background: -ms-linear-gradient(left, rgba(252,252,252,1) 0%, rgba(252,252,252,1) 0%, rgba(224,245,250,1) 100%);
+        background: linear-gradient(to right, rgba(252,252,252,1) 0%, rgba(252,252,252,1) 0%, rgba(224,245,250,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#e0f5fa', GradientType=1 );
+    }
+
+        .navbar a {
+            float: left !important;
+            font-size: 16px !important;
+            color: black !important;
+            text-align: center !important;
+            padding: 14px 16px !important;
+            text-decoration: none !important;
+        }
+
+    .subnav {
+        float: left !important;
+        position: relative;
+        display: inline-block;
+    }
+
+        .subnav .subnavbtn {
+            font-size: 16px !important;
+            border: none !important;
+            outline: none !important;
+            color: black !important;
+            padding: 14px 16px !important;
+            background-color: inherit !important;
+            font-family: inherit !important;
+            margin: 0 !important;
+        }
+
+        .navbar a:hover, .subnav:hover .subnavbtn {
+            background-color: #4ab2f1 !important;
+        }
+
+    .subnav-content {
+        display: none !important;
+        position: absolute !important;
+        background-color: #f6f6f6 !important;
+        z-index: 1 !important;
+    }
+
+        .subnav-content a {
+            float: none !important;
+            color: black !important;
+            text-decoration: none !important;
+            padding: 14px 16px !important;
+            display: block;
+        }
+
+            .subnav-content a:hover {
+                background-color: #4ab2f1 !important;
+                color: black !important;
+                padding: 14px 16px !important;
+            }
+
+    .subnav:hover .subnav-content {
+        display: block !important;
+    }
+</style>
+
 
 @helper RenderCategoryLine(CategorySimpleModel category, int level, bool responsiveMobileMenu)
 {
-    <li>
-        <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name
-        @if (category.NumberOfProducts.HasValue)
+    var subCategories = responsiveMobileMenu ?
+    //responsive (all categories)
+    category.SubCategories :
+    //standard design (only categories with "IncludeInTopMenu")
+    category.SubCategories.Where(x => x.IncludeInTopMenu).ToList();
+    if (subCategories.Count > 0)
+    {
+        string ico = "";
+        switch (category.Name)
         {
-            <text> </text>@T("Categories.TotalProducts", category.NumberOfProducts.Value)
+            case "Electronics":
+                ico = "fa-mobile";
+                break;
+            case "Shop By Science":
+                ico = "fa-flask";
+                break;
+            case "Shop By Age":
+                ico = "fa-group";
+                break;
+            case "Science Kits":
+                ico = "fa-medkit";
+                break;           
         }
-        </a>
-        @{
-            //subcategories
-            var subCategories = responsiveMobileMenu ?
-                //responsive (all categories)
-                category.SubCategories :
-                //standard design (only categories with "IncludeInTopMenu")
-                category.SubCategories.Where(x => x.IncludeInTopMenu).ToList();
-
-            var levelClass = "";
-            if (level == 0)
-            {
-                levelClass = "first-level";
-            }
-            if (subCategories.Count > 0)
-            {
-                <div class="sublist-toggle"></div>
-                <ul class="sublist @levelClass">
-                    @foreach (var subCategory in subCategories)
-                    {
-                        @RenderCategoryLine(subCategory, level + 1, responsiveMobileMenu)
-                    }
-                </ul>
-            }
-        }
-    </li>
+        <div class="subnav">
+            <button class="subnavbtn"><i class="fa @ico fa-3x"></i><br /> @category.Name</button>
+            <div class="subnav-content">
+                @foreach (var subCategory in subCategories)
+        {
+                    <a href="/@subCategory.Name">@subCategory.Name</a>
+                }
+            </div>
+        </div>
 }
-
-<ul class="top-menu">
-    @Html.Widget("header_menu_before")
-    @if (Model.DisplayHomePageMenuItem)
-    {
-        <li><a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
-    }
-    @{
-        var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList();
-    }
-    @foreach (var category in rootCategories)
-    {
-        @RenderCategoryLine(category, 0, false)
-    }
-    @foreach (var topic in Model.Topics)
-    {
-        <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
-    }
-    @if (Model.NewProductsEnabled && Model.DisplayNewProductsMenuItem)
-    {
-        <li><a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a></li>
-    }
-    @if (Model.DisplayProductSearchMenuItem)
-    {
-        <li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a></li>
-    }
-    @if (Model.DisplayCustomerInfoMenuItem)
-    {
-        <li><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a></li>
-    }
-    @if (Model.BlogEnabled && Model.DisplayBlogMenuItem)
-    {
-        <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
-    }
-    @if (Model.ForumEnabled && Model.DisplayForumsMenuItem)
-    {
-        <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
-    }
-    @if (Model.DisplayContactUsMenuItem)
-    {
-        <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
-    }
-    @Html.Widget("header_menu_after")
-</ul>
-
+}
 @{
     var rootCategoriesResponsive = Model.Categories.ToList();
-    //name it "Categories" if we have only categories. Otherwise, "Menu"
-    var responsiveMenuTitle = Model.HasOnlyCategories ? T("Categories") : T("Menu");
-    <div class="menu-toggle">@responsiveMenuTitle</div>
-    <ul class="top-menu mobile">
+//name it "Categories" if we have only categories. Otherwise, "Menu"
+var responsiveMenuTitle = Model.HasOnlyCategories ? T("Categories") : T("Menu");
+    <div class="navbar">
         @Html.Widget("mob_header_menu_before")
         @if (Model.DisplayHomePageMenuItem)
         {
-            <li><a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
+            <a href="@Url.RouteUrl("HomePage")"><i class="fa fa-home fa-3x"></i><br />@T("HomePage")</a>
         }
         @foreach (var category in rootCategoriesResponsive)
         {
             @RenderCategoryLine(category, 0, true)
+        }
+        @foreach (var topic in Model.Topics)
+        {
+            <a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a>
+        }
+        @if (Model.NewProductsEnabled && Model.DisplayNewProductsMenuItem)
+        {
+            <a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a>
+        }
+        @if (Model.DisplayProductSearchMenuItem)
+        {
+            <a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a>
+        }
+        @if (Model.DisplayCustomerInfoMenuItem)
+        {
+            <a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a>
+        }
+        @if (Model.BlogEnabled && Model.DisplayBlogMenuItem)
+        {
+            <a href="@Url.RouteUrl("Blog")">@T("Blog")</a>
+        }
+        @if (Model.ForumEnabled && Model.DisplayForumsMenuItem)
+        {
+            <a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a>
+        }
+        @if (Model.DisplayContactUsMenuItem)
+        {
+            <a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a>
+        }
+        @Html.Widget("mob_header_menu_after")
+    </div>
+
+}
+
+
+
+
+@*@model TopMenuModel
+    @using Nop.Web.Models.Catalog;
+
+    @helper RenderCategoryLine(CategorySimpleModel category, int level, bool responsiveMobileMenu)
+    {
+        <li>
+            <a href="@Url.RouteUrl("Category", new { SeName = category.SeName })">@category.Name
+            @if (category.NumberOfProducts.HasValue)
+            {
+                <text> </text>@T("Categories.TotalProducts", category.NumberOfProducts.Value)
+            }
+            </a>
+            @{
+                //subcategories
+                var subCategories = responsiveMobileMenu ?
+                    //responsive (all categories)
+                    category.SubCategories :
+                    //standard design (only categories with "IncludeInTopMenu")
+                    category.SubCategories.Where(x => x.IncludeInTopMenu).ToList();
+
+                var levelClass = "";
+                if (level == 0)
+                {
+                    levelClass = "first-level";
+                }
+                if (subCategories.Count > 0)
+                {
+                    <div class="sublist-toggle"></div>
+                    <ul class="sublist @levelClass">
+                        @foreach (var subCategory in subCategories)
+                        {
+                            @RenderCategoryLine(subCategory, level + 1, responsiveMobileMenu)
+                        }
+                    </ul>
+                }
+            }
+        </li>
+    }
+
+    <ul class="top-menu">
+        @Html.Widget("header_menu_before")
+        @if (Model.DisplayHomePageMenuItem)
+        {
+            <li><a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
+        }
+        @{
+            var rootCategories = Model.Categories.Where(x => x.IncludeInTopMenu).ToList();
+        }
+        @foreach (var category in rootCategories)
+        {
+            @RenderCategoryLine(category, 0, false)
         }
         @foreach (var topic in Model.Topics)
         {
@@ -124,20 +238,66 @@
         {
             <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
         }
-        @Html.Widget("mob_header_menu_after")
+        @Html.Widget("header_menu_after")
     </ul>
-    
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('.menu-toggle').click(function () {
-                $(this).siblings('.top-menu.mobile').slideToggle('slow');
+
+    @{
+        var rootCategoriesResponsive = Model.Categories.ToList();
+        //name it "Categories" if we have only categories. Otherwise, "Menu"
+        var responsiveMenuTitle = Model.HasOnlyCategories ? T("Categories") : T("Menu");
+        <div class="menu-toggle">@responsiveMenuTitle</div>
+        <ul class="top-menu mobile">
+            @Html.Widget("mob_header_menu_before")
+            @if (Model.DisplayHomePageMenuItem)
+            {
+                <li><a href="@Url.RouteUrl("HomePage")">@T("HomePage")</a></li>
+            }
+            @foreach (var category in rootCategoriesResponsive)
+            {
+                @RenderCategoryLine(category, 0, true)
+            }
+            @foreach (var topic in Model.Topics)
+            {
+                <li><a href="@Url.RouteUrl("Topic", new { SeName = topic.SeName })">@topic.Name</a></li>
+            }
+            @if (Model.NewProductsEnabled && Model.DisplayNewProductsMenuItem)
+            {
+                <li><a href="@Url.RouteUrl("NewProducts")">@T("Products.NewProducts")</a></li>
+            }
+            @if (Model.DisplayProductSearchMenuItem)
+            {
+                <li><a href="@Url.RouteUrl("ProductSearch")">@T("Search")</a></li>
+            }
+            @if (Model.DisplayCustomerInfoMenuItem)
+            {
+                <li><a href="@Url.RouteUrl("CustomerInfo")">@T("Account.MyAccount")</a></li>
+            }
+            @if (Model.BlogEnabled && Model.DisplayBlogMenuItem)
+            {
+                <li><a href="@Url.RouteUrl("Blog")">@T("Blog")</a></li>
+            }
+            @if (Model.ForumEnabled && Model.DisplayForumsMenuItem)
+            {
+                <li><a href="@Url.RouteUrl("Boards")">@T("Forum.Forums")</a></li>
+            }
+            @if (Model.DisplayContactUsMenuItem)
+            {
+                <li><a href="@Url.RouteUrl("ContactUs")">@T("ContactUs")</a></li>
+            }
+            @Html.Widget("mob_header_menu_after")
+        </ul>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('.menu-toggle').click(function () {
+                    $(this).siblings('.top-menu.mobile').slideToggle('slow');
+                });
+                $('.top-menu.mobile .sublist-toggle').click(function () {
+                    $(this).siblings('.sublist').slideToggle('slow');
+                });
             });
-            $('.top-menu.mobile .sublist-toggle').click(function () {
-                $(this).siblings('.sublist').slideToggle('slow');
-            });
-        });
-    </script>
-}
+        </script>
+    }*@
 
 
 

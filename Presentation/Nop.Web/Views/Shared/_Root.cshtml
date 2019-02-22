@@ -8,6 +8,7 @@
 @{
     var url = Request.RawUrl;
 }
+
 <div class="master-wrapper-page">
     @if (url != null && url != "/login?ReturnUrl=%2fadmin")
     {
@@ -17,13 +18,20 @@
     <script type="text/javascript">
         AjaxCart.init(false, '.header-links .cart-qty', '.header-links .wishlist-qty', '#flyout-cart');
     </script>
-    @if (url != null && url != "/login?ReturnUrl=%2fadmin")
-    {
-        <div class="header-menu">
-            @Html.Action("TopMenu", "Catalog")
-        </div>
-    }
+    @*@if (url != null && url != "/login?ReturnUrl=%2fadmin")
+        {
+            <div class="header-menu">
+                @Html.Action("TopMenu", "Catalog")
+            </div>
+        }*@
     <div class="master-wrapper-content">
+
+        @if (url != null && url != "/login?ReturnUrl=%2fadmin")
+            {
+            <div class="search-box store-search-box">
+                @Html.Action("SearchBox", "Catalog")
+            </div>
+        }
         @Html.Widget("content_before")
 
         @if (IsSectionDefined("Breadcrumb"))

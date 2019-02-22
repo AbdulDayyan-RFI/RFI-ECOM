@@ -22,15 +22,15 @@
     <div class="header-lower">
         <div class="header-logo">
             <a href="@Url.RouteUrl("HomePage")">
-                <img src="~/Content/Images/Logo.png" alt="logo" />
+                <img src="~/Content/Images/Logo.jpg" alt="logo" />
             </a>
         </div>
-        <div class="search-box store-search-box">
-
+        <div>
             @if (url != null && url != "/login?ReturnUrl=%2fadmin")
             {
-                @Html.Action("SearchBox", "Catalog")
+                    @Html.Action("TopMenu", "Catalog")
             }
+            
         </div>
     </div>
 </div>
