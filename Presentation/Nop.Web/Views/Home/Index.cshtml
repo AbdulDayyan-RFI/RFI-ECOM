@@ -6,10 +6,12 @@
 }
 <div class="page home-page">
     <div class="page-body">
-        @Html.Action("NewProducts", "Product")
         @Html.Widget("home_page_top")
 
         @Html.Action("TopicBlock", "Topic", new { systemName = "HomePageText" })
+        @Html.Action("NewProducts", "Product")
+
+
 
         
         @Html.Widget("home_page_before_categories")

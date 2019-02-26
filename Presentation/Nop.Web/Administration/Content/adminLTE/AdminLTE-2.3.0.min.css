@@ -278,7 +278,7 @@ a {
     display: block;
     float: left;
     min-height:50px;
-    max-height: 115px;
+    max-height: 150px;
     font-size: 20px;
     line-height: 50px;
     text-align: center;
@@ -419,7 +419,7 @@ a {
 
 .main-sidebar, .left-side {
     position: absolute;
-    top: 65px;
+    top: 126px;
     left: 0;
     padding-top: 50px;
     min-height: 100%;
