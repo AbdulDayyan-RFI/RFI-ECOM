@@ -8,10 +8,19 @@
  */
 
 /* The Nivo Slider styles */
+@media all and (min-width: 481px) {
+	.nivoSlider {
+    position: relative;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+}
+
 .nivoSlider {
     position: relative;
     width: 100%;
-    height: 300px;
+    height: auto;
     overflow: hidden;
 }
 
@@ -131,3 +140,5 @@
         .nivo-controlNav a.active {
             font-weight: bold;
         }
+
+
